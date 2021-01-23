@@ -27,7 +27,6 @@ ReactDOM.render(
       <Link to="/home">home</Link><br />
       <Link to="/mrble">mrble</Link><br />
       <Link to="/">index</Link><br />
-      ああ
       <Switch>
         <Route exact path="/" component={Index} />
         <Route path="/home" component={Home} />
