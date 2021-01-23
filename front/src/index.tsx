@@ -11,17 +11,23 @@ import './index.css';
 import reportWebVitals from './reportWebVitals';
 
 // pages
-import Index from './views/pages/index';
-import Home from './views/pages/home';
-import NoMatch from './views/pages/nomatch';
-import User from './views/pages/user';
+import Index from './pages/index';
+import Home from './pages/home';
+import NoMatch from './pages/nomatch';
+import User from './pages/user';
+
+import GrobalStyle from './components/style/GrobalStyle';
+import TheHeader from './components/layout/TheHeader';
 
 ReactDOM.render(
   <React.StrictMode>
+    <GrobalStyle />
+    <TheHeader />
     <Router>
       <Link to="/home">home</Link><br />
       <Link to="/mrble">mrble</Link><br />
       <Link to="/">index</Link><br />
+      ああ
       <Switch>
         <Route exact path="/" component={Index} />
         <Route path="/home" component={Home} />
