@@ -1,4 +1,4 @@
-import axios, { AxiosInstance, AxiosResponse } from 'axios';
+import axios, { AxiosInstance, AxiosResponse, AxiosError } from 'axios';
 import camelCaseKeys from 'camelcase-keys';
 
 const $axios: AxiosInstance = axios.create({
@@ -10,7 +10,7 @@ const $axios: AxiosInstance = axios.create({
 $axios.interceptors.response.use(
   (response: AxiosResponse): AxiosResponse => {
     return camelCaseKeys(response, { deep: true });
-  }
-)
+  },
+);
 
 export { $axios };

@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { css, SerializedStyles } from '@emotion/react'
 import colorCodes from '../utils/colorCodes';
 

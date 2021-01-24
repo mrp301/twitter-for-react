@@ -1,12 +1,18 @@
 /** @jsxImportSource @emotion/react */
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { css } from '@emotion/react'
 import { $axios } from '../lib/axios';
 import { useHistory } from "react-router-dom";
+import camelCaseKeys from 'camelcase-keys';
 
 import AppInput from '../components/form/AppInput';
 import AppButton from '../components/AppButton';
 import colorCodes from '../utils/colorCodes';
+
+type Props = {
+  handleSetLogin?: Function,
+}
 
 const container = css({
   margin: '0 auto',
@@ -39,7 +45,7 @@ const mgBottom = css({
 });
 
 
-const Index = () => {
+const Index: React.FC<Props> = () => {
   const history = useHistory();
   useEffect(() => {
     document.title = '新規アカウント作成';
@@ -61,9 +67,9 @@ const Index = () => {
         password,
         password_confirmation,
       });
-      history.push('/home');
+      history.push('/login');
     } catch(error) {
-      const { fullMessages }: {fullMessages: string[]} = error.response.data.errors;
+      const { fullMessages }: {fullMessages: string[]} = camelCaseKeys(error.response.data.errors);
       setErrors(fullMessages);
       console.error(fullMessages);
     }
@@ -138,7 +144,7 @@ const Index = () => {
             />
           </li>
         </ul>
-        <div>
+        <div className="u-margin-bottom--large">
           <AppButton handleClick={handleClick}>
               アカウント作成
           </AppButton>
@@ -150,6 +156,7 @@ const Index = () => {
             )}
           </ul>
         )}
+        <Link to="/login">ログイン</Link>
       </div>
     </>
   );

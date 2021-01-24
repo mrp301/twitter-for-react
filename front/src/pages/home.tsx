@@ -1,6 +1,10 @@
 import React, { useEffect } from 'react'
 
-const Home = () => {
+type Props = {
+  handleSetLogin?: Function,
+}
+
+const Home: React.FC<Props> = () => {
   useEffect(() => {
     document.title = 'HOME';
   });

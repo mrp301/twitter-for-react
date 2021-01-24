@@ -113,3 +113,10 @@ const card = {
 ```
 
 逆に、型を緩くすることを`アップキャスト`と呼ぶ。
+
+## React
+
+### `ReactNode`、`ReactElement`の違い
+
+`ReactNode`の中に、`ReactElement`がある関係性。
+JSX 全てをまとめた type として`ReactNode`があり、そこから`string`や`null`を除いた純粋な React コンポーネントを意味するのが`ReactElement`。
