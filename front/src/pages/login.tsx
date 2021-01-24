@@ -128,9 +128,9 @@ const Login: React.FC<Props> = ({ children }) => {
           <h1 css={h1}>ログイン中</h1>
           <ul css={userInfo}>
             <li>ID：{user.id}</li>
-            <li>名前{user.name}</li>
+            <li>名前：{user.name}</li>
             <li>ニックネーム：{user.nickname}</li>
-            <li>メール{user.email}</li>
+            <li>メール：{user.email}</li>
           </ul>
           {children}
         </div>
