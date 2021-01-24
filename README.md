@@ -17,11 +17,12 @@ source ~/.bashrc
 ```
 
 ```
-// ディレクトリに移動して
-npm install
 docker-compose build --no-cache
 docker-compose run --rm api rake db:create
 docker-compose run --rm api rake db:migrate
+
+// frontディレクトリに移動して
+npm install
 ```
 
 - api：http://localhost:3000/
