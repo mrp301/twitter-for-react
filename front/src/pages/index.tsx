@@ -1,14 +1,17 @@
 /** @jsxImportSource @emotion/react */
 import React, { useState, useEffect } from 'react';
 import { css } from '@emotion/react'
-import axios from 'axios';
-import colorCodes from '../utils/colorCodes';
+import { $axios } from '../lib/axios';
+import camelCaseKeys from 'camelcase-keys';
+import { useHistory } from "react-router-dom";
 
 import AppInput from '../components/form/AppInput';
+import AppButton from '../components/AppButton';
+import colorCodes from '../utils/colorCodes';
 
 const container = css({
   margin: '0 auto',
-  width: 540,
+  maxWidth: 540,
   padding: '30px 20px',
   borderRadius: 10,
 });
@@ -20,29 +23,17 @@ const title = css({
   marginBottom: 10,
 });
 
-const input = css({
-  padding: '10px 5px',
-  width: '100%',
-  borderRadius: 4,
-  border: 'solid 1px #fff',
+const errorList = css({
+  marginTop: 30,
+  padding: 10,
+  border: `solid 2px ${colorCodes.primary}`,
   backgroundColor: colorCodes.tertiary,
-});
-
-const button = css({
-  width: '100%',
-  minWidth: 300,
-  fontSize: '1.3rem',
-  color: '#fff',
-  padding: '15px 20px',
-  fontWeight: 'bold',
-  textAlign: 'center',
-  borderRadius: 48,
-  backgroundColor: colorCodes.primary,
-  '&:hover': {
-    opacity: 0.8,
-    cursor: 'pointer',
-  }
-});
+  listStyle: 'square',
+  listStylePosition: 'inside',
+  'li:not(:last-child)': {
+    marginBottom: 10,
+  },
+})
 
 const mgBottom = css({
   marginBottom: 15,
@@ -50,7 +41,7 @@ const mgBottom = css({
 
 
 const Index = () => {
-
+  const history = useHistory();
   useEffect(() => {
     document.title = '新規アカウント作成';
   });
@@ -60,25 +51,32 @@ const Index = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [password_confirmation, setPassword_confirmation] = useState('');
+  const [errors, setErrors] = useState<string[]>([]);
 
-  const handleClick = async() => {
-    console.log(`${name}:${nickname}:${email}:${password}:${password_confirmation}`);
-    if (!name || !nickname || !email || !password || !password_confirmation) {
-      alert('未入力項目があります。');
-      return;
-    }
+  const createUser = async(): Promise<void> => {
     try {
-      const response = await axios.post('http://localhost:3000/api/v1/auth', {
+      await $axios.post('/', {
         name,
         nickname,
         email,
         password,
         password_confirmation,
       });
-      console.log(response);
-    } catch({ response }) {
-      console.error(response.data.errors);
+      history.push('/home');
+    } catch(error) {
+      const { fullMessages }: {fullMessages: string[]} = camelCaseKeys(error.response.data.errors);
+      setErrors(fullMessages);
+      console.error(fullMessages);
     }
+  }
+
+  const handleClick = (): void => {
+    console.log(`${name}:${nickname}:${email}:${password}:${password_confirmation}`);
+    if (!name || !nickname || !email || !password || !password_confirmation) {
+      alert('未入力項目があります。');
+      return;
+    }
+    createUser();
   }
 
   return (
@@ -142,8 +140,17 @@ const Index = () => {
           </li>
         </ul>
         <div>
-          <button css={button} onClick={handleClick}>アカウント作成</button>
+          <AppButton handleClick={handleClick}>
+              アカウント作成
+          </AppButton>
         </div>
+        {!!errors.length && (
+          <ul css={errorList}>
+            {errors.map(error =>
+              <li key={error}>{error}</li>
+            )}
+          </ul>
+        )}
       </div>
     </>
   );

@@ -4,7 +4,7 @@ import { css, SerializedStyles } from '@emotion/react'
 import colorCodes from '../utils/colorCodes';
 
 type Props = {
-  handleClick: Promise<void>,
+  handleClick: Function,
   children: React.ReactNode,
   cssProps?: SerializedStyles,
 }
@@ -27,10 +27,10 @@ const button = css({
 
 const appButton: React.FC<Props> = ({children, handleClick}) => {
   return(
-    <button css={button} onClick={() => handleClick}>
+    <button css={button} onClick={() => handleClick()}>
       {children}
     </button>
   )
-});
+};
 
 export default appButton;

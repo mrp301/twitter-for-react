@@ -1,5 +1,4 @@
 /** @jsxImportSource @emotion/react */
-import React, { useState, useEffect } from 'react';
 import { css, SerializedStyles } from '@emotion/react'
 import colorCodes from '../../utils/colorCodes';
 
@@ -17,6 +16,7 @@ const appInput: React.FC<Props> = (props) => {
   const label = css({
     display: 'block',
     marginBottom: 8,
+    cursor: 'default',
   });
 
   const input = css(

@@ -1,6 +1,10 @@
-import React, { useState } from 'react'
+import React, { useEffect } from 'react'
 
 const Home = () => {
+  useEffect(() => {
+    document.title = 'HOME';
+  });
+
   return (
     <>
     タイムライン
