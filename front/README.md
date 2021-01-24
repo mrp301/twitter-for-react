@@ -1,46 +1,115 @@
-# Getting Started with Create React App
+# TypeScript について学ぼう
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## 基本構文
 
-## Available Scripts
+### StringLiteralTypes
 
-In the project directory, you can run:
+```ts
+// みらい、えも、りんか以外代入不可能となる。
+let idolName: "みらい" | "えも" | "りんか";
+```
 
-### `npm start`
+※当然だが、TypeScript の型推論では`string`と推論されてしまう。
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### const/let の型推論
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+```ts
+const name = "みらい"; // みらい
+let name = "みらい"; // string
+```
 
-### `npm test`
+`const`で定義した場合は、`StringLiteralTypes`として推論される。
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## 配列
 
-### `npm run build`
+### 型定義
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```ts
+const array: string[] = ["hoge", "fuga"];
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+複数のデータ型を許容する場合
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```ts
+const array: (string | number)[] = ["hoge", 100];
+```
 
-### `npm run eject`
+### const アサーション
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+```ts
+// nameとage以外は代入不可能となる。
+const hoge = ["name", "age"] as const;
+```
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## オブジェクト
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+### 読み取り専用プロパティ
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+```ts
+type Obj {
+  readonly id: number,
+  name: string,
+}
 
-## Learn More
+const obj: Obj {
+  id: 1,
+  name: 'みらい',
+}
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+// 全てをreadonlyにしたい場合
+const obj: Readonly<Obj> {
+  id: 1,
+  name: 'みらい',
+}
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### 動的に値を追加する。
+
+```ts
+type User = {
+  name: string;
+  [k: string]: any;
+};
+
+const Mirai: user = {
+  name: "桃山みらい",
+  age: 14,
+  type: "ラブリー",
+};
+```
+
+`[k: string]`を`インデックスシグネチャ`と呼ぶ。
+
+### キー名に制約をかける
+
+```ts
+type Keys = "name" | "age";
+const user = {
+  [k in Keys]: string,
+};
+
+// 「?」を付与することで任意にできる
+const user = {
+  [k in Keys]: string,
+};
+```
+
+### ダウンキャスト
+
+```ts
+const card = {
+  color: "red", // string
+  type: "text", // string
+};
+```
+
+型推論された結果よりも詳細な型が明確な時にプログラマーがアサーションで型を詳細にしていくことを、`ダウンキャスト`と呼ぶ。
+
+```ts
+const card = {
+  color: "red" as const,
+  type: "text" as const,
+};
+```
+
+逆に、型を緩くすることを`アップキャスト`と呼ぶ。
