@@ -2,7 +2,6 @@
 import React, { useState, useEffect } from 'react';
 import { css } from '@emotion/react'
 import { $axios } from '../lib/axios';
-import camelCaseKeys from 'camelcase-keys';
 import { useHistory } from "react-router-dom";
 
 import AppInput from '../components/form/AppInput';
@@ -69,8 +68,8 @@ const Index = () => {
 
     try {
       const response = await $axios.post('/sign_in', postParams);
-      const responseBody: ResponseLoginBody = camelCaseKeys(response.data.data);
-      const responseHeader: ResponseLoginHeaders = camelCaseKeys(response.headers);
+      const responseBody: ResponseLoginBody = response.data.data;
+      const responseHeader: ResponseLoginHeaders = response.headers;
       const { uid, client, accessToken: token } = responseHeader;
 
       console.log(`${uid}：${client}：${token}`);

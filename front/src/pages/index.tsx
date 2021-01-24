@@ -2,7 +2,6 @@
 import React, { useState, useEffect } from 'react';
 import { css } from '@emotion/react'
 import { $axios } from '../lib/axios';
-import camelCaseKeys from 'camelcase-keys';
 import { useHistory } from "react-router-dom";
 
 import AppInput from '../components/form/AppInput';
@@ -64,7 +63,7 @@ const Index = () => {
       });
       history.push('/home');
     } catch(error) {
-      const { fullMessages }: {fullMessages: string[]} = camelCaseKeys(error.response.data.errors);
+      const { fullMessages }: {fullMessages: string[]} = error.response.data.errors;
       setErrors(fullMessages);
       console.error(fullMessages);
     }
