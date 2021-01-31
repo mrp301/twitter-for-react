@@ -6,34 +6,41 @@ import {
   Route,
   Link,
 } from 'react-router-dom';
-import './index.css';
 import reportWebVitals from './reportWebVitals';
+
+// styles
+import './index.css';
+import GrobalStyle from './components/style/GrobalStyle';
 
 // pages
 import Home from './pages/home';
 import Login from './pages/login';
 import User from './pages/user';
 
-
-import GrobalStyle from './components/style/GrobalStyle';
+// components
 import TheHeader from './components/layout/TheHeader';
+
+// container
+import AuthContainer from './containers/authCotainer';
 
 ReactDOM.render(
   <React.StrictMode>
     <GrobalStyle />
-    <Router>
-      <TheHeader>
-        <Link to="/home">home</Link>
-        <Link to="/">index</Link>
-        <Link to="/user">User</Link>
-      </TheHeader>
-      <Login>
-        <Switch>
-          <Route path="/home" component={Home} />
-          <Route path="/:id" children={<User />} />
-        </Switch>
-      </Login>
-    </Router>
+    <AuthContainer>
+      <Router>
+        <TheHeader>
+          <Link to="/home">home</Link>
+          <Link to="/">index</Link>
+          <Link to="/user">User</Link>
+        </TheHeader>
+        <Login>
+          <Switch>
+            <Route path="/home" component={Home} />
+            <Route path="/:id" children={<User />} />
+          </Switch>
+        </Login>
+      </Router>
+    </AuthContainer>
   </React.StrictMode>,
   document.getElementById('root')
 );

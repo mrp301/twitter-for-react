@@ -1,21 +1,33 @@
 /** @jsxImportSource @emotion/react */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import {
   BrowserRouter as Router,
   Switch,
   Route,
   Link,
 } from 'react-router-dom';
-import { css } from '@emotion/react'
-import { $axios } from '../lib/axios';
 import { useHistory } from "react-router-dom";
+
+// style
+import { css } from '@emotion/react';
+
+// modules
+import colorCodes from '../utils/colorCodes';
+import { $axios } from '../lib/axios';
 import camelCaseKeys from 'camelcase-keys';
 
+// pages
 import Index from './index';
 
+// components
 import AppInput from '../components/form/AppInput';
 import AppButton from '../components/AppButton';
-import colorCodes from '../utils/colorCodes';
+
+// context
+import { Store } from '../containers/authCotainer';
+
+// types
+import { Auth, StoreProvider } from '../types';
 
 type Props = {
   children: React.ReactElement,
@@ -83,12 +95,8 @@ const userInfo = css({
   },
 })
 
-
 const Login: React.FC<Props> = ({ children }) => {
   const history = useHistory();
-  useEffect(() => {
-    document.title = 'ログイン';
-  });
 
   const [login, setLogin] = useState<boolean>(false);
   const [email, setEmail] = useState('');
@@ -96,15 +104,20 @@ const Login: React.FC<Props> = ({ children }) => {
   const [errors, setErrors] = useState<string[]>([]);
   const [user, setUser] = useState<ResponseLoginBody>();
 
+  const { state, dispatch }: StoreProvider = useContext(Store);
+
+  useEffect(() => {
+    document.title = 'ログイン';
+  }, []);
 
   const handleLogin = async(): Promise<void> => {
-    const postParams: PostParams = { email, password}
+    const postParams: PostParams = { email, password }
     try {
       const response = await $axios.post('/sign_in', postParams);
       const responseBody: ResponseLoginBody = response.data.data;
       const responseHeader: ResponseLoginHeaders = response.headers;
       const { uid, client, accessToken: token } = responseHeader;
-
+      const auth: Auth = { uid, client, token };
       setUser(responseBody);
 
       console.log(`${uid}：${client}：${token}`);
@@ -112,6 +125,7 @@ const Login: React.FC<Props> = ({ children }) => {
       console.log(responseHeader);
 
       setLogin(true);
+      dispatch({ type: 'SET_TOKEN', auth });
       history.push('/home');
 
     } catch(error) {
@@ -126,6 +140,9 @@ const Login: React.FC<Props> = ({ children }) => {
       <>
         <div css={container}>
           <h1 css={h1}>ログイン中</h1>
+          { state.auth.uid }<br />
+          { state.auth.client }<br />
+          { state.auth.token }<br />
           <ul css={userInfo}>
             <li>ID：{user.id}</li>
             <li>名前：{user.name}</li>
@@ -186,7 +203,6 @@ const Login: React.FC<Props> = ({ children }) => {
           </Route>
           <Route path="/" component={Index} />
         </Switch>
-
       </Router>
     );
   }
