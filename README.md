@@ -1,5 +1,9 @@
 # twitter for react
 
+## 勉強会資料
+
+[TypeScriptを使うことで得られる Developer Experience](https://docs.google.com/presentation/d/1c3_KZ6zwdN-PcAZmTCmuJyr9PrxoFhcakvelYBkv2lk/edit?usp=sharing)
+
 ## 実行環境
 
 - Docer
