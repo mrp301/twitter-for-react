@@ -8,6 +8,12 @@ const $axios: AxiosInstance = axios.create({
 });
 
 $axios.interceptors.response.use(
+  (config: AxiosResponse) => {
+    config.headers['access-token'] = '9zCe6skKM9uO-IEIlAiavw';
+    config.headers.uid = 'tfusHyISiOvZvWLJARBFAQ';
+    config.headers.client = 'hoge@gmail.com';
+    return config;
+  },
   (response: AxiosResponse): AxiosResponse => {
     return camelCaseKeys(response, { deep: true });
   },

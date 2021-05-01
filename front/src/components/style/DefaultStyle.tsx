@@ -1,9 +1,9 @@
 /** @jsxImportSource @emotion/react */
-import React from 'react';
-import { css } from '@emotion/react'
+import React from "react";
+import { css } from "@emotion/react";
 
 // images
-import tile from '../../images/girls_tile.png';
+import tile from "../../images/girls_tile.png";
 
 const defaultStyle = css`
   html {
@@ -39,6 +39,6 @@ const defaultStyle = css`
     padding: 15px;
     background-color: #fff;
   }
-`
+`;
 
 export default defaultStyle;
