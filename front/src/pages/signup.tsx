@@ -8,6 +8,7 @@ import camelCaseKeys from "camelcase-keys";
 
 import AppInput from "../components/form/AppInput";
 import AppButton from "../components/AppButton";
+import AppCard from "../components/AppCard";
 import Head from "../components/Head";
 import colorCodes from "../utils/colorCodes";
 
@@ -18,7 +19,7 @@ type Props = {
 const container = css({
   margin: "0 auto",
   maxWidth: 540,
-  padding: "30px 20px",
+  padding: "70px 20px",
   borderRadius: 10,
 });
 
@@ -26,7 +27,7 @@ const title = css({
   textAlign: "center",
   fontSize: "1.8rem",
   fontWeight: "bold",
-  marginBottom: 10,
+  marginBottom: 25,
 });
 
 const errorList = css({
@@ -39,10 +40,6 @@ const errorList = css({
   "li:not(:last-child)": {
     marginBottom: 10,
   },
-});
-
-const mgBottom = css({
-  marginBottom: 15,
 });
 
 const Signup: React.FC<Props> = () => {
@@ -87,76 +84,79 @@ const Signup: React.FC<Props> = () => {
     <>
       <Head title="アカウント作成" />
       <div css={container}>
-        <div css={title}>アカウントを作成</div>
-        <ul className="u-margin-bottom--large">
-          <li>
-            <AppInput
-              label="ユーザー名"
-              key="name"
-              name="name"
-              value={name}
-              setValue={setName}
-              placeholder="ユーザー名"
-              cssProps={mgBottom}
-            />
-          </li>
-          <li>
-            <AppInput
-              label="ニックネーム"
-              key="nickname"
-              name="nickname"
-              value={nickname}
-              setValue={setNickname}
-              placeholder="ニックネーム"
-              cssProps={mgBottom}
-            />
-          </li>
-          <li>
-            <AppInput
-              label="email"
-              key="email"
-              name="email"
-              value={email}
-              setValue={setEmail}
-              placeholder="email"
-              cssProps={mgBottom}
-            />
-          </li>
-          <li>
-            <AppInput
-              label="password"
-              key="password"
-              name="password"
-              value={password}
-              setValue={setPassword}
-              placeholder="password"
-              cssProps={mgBottom}
-            />
-          </li>
-          <li>
-            <AppInput
-              label="パスワード確認"
-              key="password_confirmation"
-              name="password_confirmation"
-              value={password_confirmation}
-              setValue={setPassword_confirmation}
-              placeholder="パスワード確認"
-            />
-          </li>
-        </ul>
-        <div className="u-margin-bottom--large">
-          <AppButton type="nomal" handleClick={handleClick}>
-            アカウント作成
-          </AppButton>
-        </div>
-        {!!errors.length && (
-          <ul css={errorList}>
-            {errors.map((error) => (
-              <li key={error}>{error}</li>
-            ))}
+        <AppCard>
+          <div css={title}>アカウントを作成</div>
+          <ul className="u-margin-bottom--large">
+            <li>
+              <AppInput
+                key="name"
+                name="name"
+                value={name}
+                setValue={setName}
+                placeholder="ユーザー名"
+                className="u-margin-bottom--small"
+              />
+            </li>
+            <li>
+              <AppInput
+                key="nickname"
+                name="nickname"
+                value={nickname}
+                setValue={setNickname}
+                placeholder="ニックネーム"
+                className="u-margin-bottom--small"
+              />
+            </li>
+            <li>
+              <AppInput
+                key="email"
+                name="email"
+                value={email}
+                setValue={setEmail}
+                placeholder="email"
+                className="u-margin-bottom--small"
+              />
+            </li>
+            <li>
+              <AppInput
+                key="password"
+                name="password"
+                value={password}
+                setValue={setPassword}
+                placeholder="password"
+                className="u-margin-bottom--small"
+              />
+            </li>
+            <li>
+              <AppInput
+                key="password_confirmation"
+                name="password_confirmation"
+                value={password_confirmation}
+                setValue={setPassword_confirmation}
+                placeholder="パスワード確認"
+              />
+            </li>
           </ul>
-        )}
-        <Link to="/login">ログイン</Link>
+          <div className="u-text--center u-margin-bottom--medium">
+            <AppButton
+              type="primary"
+              handleClick={handleClick}
+              className="u-margin-bottom--medium"
+            >
+              アカウント作成
+            </AppButton>
+            <Link to="/login">
+              <AppButton type="nomal">ログイン</AppButton>
+            </Link>
+          </div>
+          {!!errors.length && (
+            <ul css={errorList}>
+              {errors.map((error) => (
+                <li key={error}>{error}</li>
+              ))}
+            </ul>
+          )}
+        </AppCard>
       </div>
     </>
   );

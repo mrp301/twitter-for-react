@@ -14,7 +14,8 @@ import camelCaseKeys from "camelcase-keys";
 // components
 import AppInput from "../components/form/AppInput";
 import AppButton from "../components/AppButton";
-import { AuthContext } from "../components/authCotainer";
+import AppCard from "../components/AppCard";
+import { AuthContext } from "../components/AuthCotainer";
 
 // types
 import { Auth, StoreProvider } from "../types";
@@ -46,7 +47,7 @@ type ResponseLoginBody = {
 const container = css({
   margin: "0 auto",
   maxWidth: 540,
-  padding: "30px 20px",
+  padding: "70px 20px",
   borderRadius: 10,
 });
 
@@ -54,11 +55,7 @@ const title = css({
   textAlign: "center",
   fontSize: "1.8rem",
   fontWeight: "bold",
-  marginBottom: 10,
-});
-
-const mgBottom = css({
-  marginBottom: 15,
+  marginBottom: 25,
 });
 
 const Login: React.FC = () => {
@@ -94,44 +91,49 @@ const Login: React.FC = () => {
     <>
       <Head title="ログイン" />
       <div css={container}>
-        <div css={title}>ログイン</div>
-        <ul className="u-margin-bottom--large">
-          <li>
-            <AppInput
-              label="email"
-              key="email"
-              name="email"
-              value={email}
-              setValue={setEmail}
-              placeholder="email"
-              cssProps={mgBottom}
-            />
-          </li>
-          <li>
-            <AppInput
-              label="password"
-              key="password"
-              name="password"
-              value={password}
-              setValue={setPassword}
-              placeholder="password"
-              cssProps={mgBottom}
-            />
-          </li>
-        </ul>
-        <div className="u-margin-bottom--large">
-          <AppButton type="nomal" handleClick={handleLogin}>
-            ログイン
-          </AppButton>
-        </div>
-        {!!errors.length && (
-          <ul>
-            {errors.map((error) => (
-              <li key={error}>{error}</li>
-            ))}
+        <AppCard>
+          <div css={title}>ログイン</div>
+          <ul className="u-margin-bottom--large">
+            <li>
+              <AppInput
+                key="email"
+                name="email"
+                value={email}
+                setValue={setEmail}
+                placeholder="email"
+                className="u-margin-bottom--small"
+              />
+            </li>
+            <li>
+              <AppInput
+                key="password"
+                name="password"
+                value={password}
+                setValue={setPassword}
+                placeholder="password"
+              />
+            </li>
           </ul>
-        )}
-        <Link to="/">アカウント作成</Link>
+          <div className="u-margin-bottom--medium u-text--center">
+            <AppButton
+              type="primary"
+              handleClick={handleLogin}
+              className="u-margin-bottom--medium"
+            >
+              ログイン
+            </AppButton>
+            <Link to="/signup">
+              <AppButton type="nomal">アカウント作成</AppButton>
+            </Link>
+          </div>
+          {!!errors.length && (
+            <ul>
+              {errors.map((error) => (
+                <li key={error}>{error}</li>
+              ))}
+            </ul>
+          )}
+        </AppCard>
       </div>
     </>
   );

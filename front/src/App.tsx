@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 // styles
-import "./index.css";
+import "./index.scss";
 import GrobalStyle from "./components/style/GrobalStyle";
 
 // pages
@@ -13,14 +13,17 @@ import Login from "./pages/login";
 import User from "./pages/user";
 
 // components
-import TheHeader from "./components/layout/TheHeader";
-import AuthContainer from "./components/authCotainer";
-import { AuthProvider } from "./components/authCotainer";
+import AuthContainer from "./components/AuthCotainer";
+import { AuthProvider } from "./components/AuthCotainer";
+import Loading from "./components/Loading";
 
 const App: React.FC = () => {
   const [isLoad, setIsLoad] = useState(false);
   useEffect(() => {
-    setIsLoad(true);
+    // debugger;
+    setTimeout(() => {
+      setIsLoad(true);
+    }, 500);
   }, []);
 
   return (
@@ -29,11 +32,6 @@ const App: React.FC = () => {
       {isLoad ? (
         <AuthProvider>
           <Router>
-            <TheHeader>
-              <Link to="/home">home</Link>
-              <Link to="/">index</Link>
-              <Link to="/user">User</Link>
-            </TheHeader>
             <Switch>
               <Route exact path="/" component={Index} />
               <Route path="/signup" component={Signup} />
@@ -46,7 +44,7 @@ const App: React.FC = () => {
           </Router>
         </AuthProvider>
       ) : (
-        <TheHeader>aaa</TheHeader>
+        <Loading />
       )}
     </>
   );

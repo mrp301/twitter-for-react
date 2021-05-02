@@ -41,7 +41,6 @@ const Home: React.FC<Props> = () => {
       <Head title="ホーム" />
       <h1>タイムライン</h1>
       <AppInput
-        label="tweet"
         key="tweet"
         name="tweet"
         value={tweet}

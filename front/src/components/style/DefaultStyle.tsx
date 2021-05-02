@@ -7,7 +7,8 @@ import tile from "../../images/girls_tile.png";
 
 const defaultStyle = css`
   html {
-    font-family: "Meiryo", "Hiragino Kaku Gothic ProN", "Hiragino Sans", sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu,
+      Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
     font-size: 62.5%;
   }
 

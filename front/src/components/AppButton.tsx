@@ -8,14 +8,14 @@ type Props = {
   handleClick?: Function;
   children: React.ReactNode;
   cssProps?: SerializedStyles;
+  className?: string;
 };
 
-const appButton: React.FC<Props> = ({ children, type, handleClick }) => {
+const appButton: React.FC<Props> = ({ children, type, handleClick, className }) => {
   const buttonType = {
     nomal: {
-      color: colorCodes.primary,
-      border: `solid 2px ${colorCodes.primary}`,
-      backgroundColor: colorCodes.base,
+      color: "#1b1b1b",
+      backgroundColor: "#eaeaea",
     },
     primary: {
       color: "#fff",
@@ -24,7 +24,6 @@ const appButton: React.FC<Props> = ({ children, type, handleClick }) => {
   };
 
   const button = css({
-    display: "block",
     padding: "15px 20px",
     width: "100%",
     maxWidth: 150,
@@ -33,21 +32,23 @@ const appButton: React.FC<Props> = ({ children, type, handleClick }) => {
     fontWeight: "bold",
     textAlign: "center",
     borderRadius: 48,
-    "&:hover": {
-      opacity: 0.8,
-      cursor: "pointer",
-    },
     ...buttonType[type],
+    "&:hover": {
+      cursor: "pointer",
+      opacity: 0.8,
+    },
   });
 
   return (
     <>
       {handleClick ? (
-        <button css={button} onClick={() => handleClick()}>
+        <button className={className} css={button} onClick={() => handleClick()}>
           {children}
         </button>
       ) : (
-        <button css={button}>{children}</button>
+        <button className={className} css={button}>
+          {children}
+        </button>
       )}
     </>
   );

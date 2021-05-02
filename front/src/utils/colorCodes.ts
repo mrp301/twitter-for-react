@@ -1,4 +1,8 @@
 type ColorCodes = {
+  primary: string;
+  secondary: string;
+  tertiary: string;
+  base: string;
   [k: string]: string;
 };
 

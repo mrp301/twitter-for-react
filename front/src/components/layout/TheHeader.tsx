@@ -1,8 +1,9 @@
 /** @jsxImportSource @emotion/react */
-import React from 'react';
-import { css } from '@emotion/react'
+import React from "react";
+import { Link } from "react-router-dom";
+import { css } from "@emotion/react";
 
-import colorCodes from '../../utils/colorCodes';
+import colorCodes from "../../utils/colorCodes";
 
 const header = css`
   display: flex;
@@ -13,15 +14,17 @@ const header = css`
   *:not(:last-child) {
     margin-right: 20px;
   }
-`
+`;
 
-const theHeader: React.FC = ({ children }) => {
+const theHeader: React.FC = () => {
   return (
     <header css={header}>
       <h1>プリスタグラム</h1>
-      {children}
+      <Link to="/home">home</Link>
+      <Link to="/">index</Link>
+      <Link to="/user">User</Link>
     </header>
-  )
+  );
 };
 
 export default theHeader;
