@@ -4,16 +4,8 @@ import { Link } from "react-router-dom";
 import { css } from "@emotion/react";
 import Head from "../components/Head";
 import AppButton from "../components/AppButton";
-import AppCard from "../components/AppCard";
-import marginSizes from "../lib/style/marginSizes";
-
-const container = css({
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-  marginTop: 70,
-  height: "100%",
-});
+import OnlyCard from "../components/layout/OnlyCard";
+import { textAlign, marginBottom } from "../lib/style/index";
 
 const h1 = css({
   textAlign: "center",
@@ -26,19 +18,26 @@ const Index: React.FC = () => {
   return (
     <>
       <Head title="「いま」を見つけよう" />
-      <div css={container}>
-        <AppCard>
-          <h1 css={h1}>Pristagram</h1>
-          <div css={marginSizes.bottom[16]}>
-            <Link to="/signup">
-              <AppButton type="nomal">アカウント作成</AppButton>
-            </Link>
-          </div>
-          <Link to="/login">
-            <AppButton type="primary">ログイン</AppButton>
+      <OnlyCard>
+        <h1 css={h1}>
+          <img src={`${process.env.PUBLIC_URL}/logo.svg`} alt="Pristagram" width="200" />
+        </h1>
+        <div css={[marginBottom("medium"), textAlign("center")]}>
+          <Link to="/signup">
+            <AppButton type="primary" css={marginBottom("medium")}>
+              アカウント作成
+            </AppButton>
           </Link>
-        </AppCard>
-      </div>
+          <Link to="/login">
+            <AppButton type="primary" css={marginBottom("xxlarge")}>
+              ログイン
+            </AppButton>
+          </Link>
+          <Link to="/home">
+            <AppButton type="nomal">ログインせずタイムラインを見る</AppButton>
+          </Link>
+        </div>
+      </OnlyCard>
     </>
   );
 };

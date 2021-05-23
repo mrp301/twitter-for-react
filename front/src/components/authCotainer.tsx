@@ -6,6 +6,7 @@ import { Route, Redirect } from "react-router-dom";
 const AuthContext = createContext({} as StoreProvider);
 const AuthProvider: React.FC = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
+
   return (
     <AuthContext.Provider value={{ state, dispatch }}>{children}</AuthContext.Provider>
   );
@@ -18,5 +19,4 @@ const AuthContainer: React.FC = ({ children }): JSX.Element => {
   );
 };
 
-export default AuthContainer;
-export { AuthContext, AuthProvider };
+export { AuthContext, AuthProvider, AuthContainer };

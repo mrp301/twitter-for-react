@@ -1,6 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import React from "react";
 import { css } from "@emotion/react";
+import { motion } from "framer-motion";
 
 type Props = {
   type?: "nomal" | "primary";
@@ -8,6 +9,7 @@ type Props = {
 };
 
 const card = css({
+  display: "block",
   border: "solid 1px #dbdbdb",
   padding: "30px 20px",
   backgroundColor: "#fff",
@@ -15,7 +17,11 @@ const card = css({
 });
 
 const appCard: React.FC<Props> = ({ children }) => {
-  return <div css={card}>{children}</div>;
+  return (
+    <motion.div layout css={card}>
+      {children}
+    </motion.div>
+  );
 };
 
 export default appCard;

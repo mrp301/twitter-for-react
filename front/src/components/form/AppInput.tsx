@@ -10,6 +10,7 @@ type Props = {
   placeholder: string;
   cssProps?: SerializedStyles;
   className?: string;
+  type: string;
 };
 
 const appInput: React.FC<Props> = (props) => {
@@ -33,7 +34,7 @@ const appInput: React.FC<Props> = (props) => {
       <input
         id={props.name}
         name={props.name}
-        type="text"
+        type={props.type}
         value={props.value}
         css={input}
         className={props.className}

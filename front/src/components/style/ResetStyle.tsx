@@ -1,10 +1,9 @@
-/** @jsxImportSource @emotion/react */
-import React from "react";
 import { css } from "@emotion/react";
 
 const resetStyle = css`
   html,
   body,
+  main,
   div,
   span,
   applet,
