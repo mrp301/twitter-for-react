@@ -1,18 +1,14 @@
-import React from 'react'
-import { useParams } from 'react-router-dom';
+import React from "react";
+import { useParams } from "react-router-dom";
 
 type Props = {
-  handleSetLogin?: Function,
-}
+  handleSetLogin?: Function;
+};
 
 const User: React.FC<Props> = () => {
-  let { id } = useParams<{id?: string}>();
+  let { id } = useParams<{ id?: string }>();
 
-  return (
-    <>
-      {id}
-    </>
-  );
-}
+  return <>{id}</>;
+};
 
-export default User;
+export { User };

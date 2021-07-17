@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css, SerializedStyles } from "@emotion/react";
-import colorCodes from "../../utils/colorCodes";
+import { color } from "../../utils/constants/index";
 
 type Props = {
   key: string;
@@ -20,7 +20,7 @@ const appInput: React.FC<Props> = (props) => {
       width: "100%",
       borderRadius: 4,
       border: "solid 1px #fff",
-      backgroundColor: colorCodes.tertiary,
+      backgroundColor: color.tertiary,
     },
     props.cssProps
   );

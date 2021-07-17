@@ -4,12 +4,12 @@ import { css } from "@emotion/react";
 type Size = "small" | "medium" | "large" | "xlarge" | "xxlarge" | "xxxlarge";
 
 const sizeTypes = {
-  small: 5,
-  medium: 10,
-  large: 15,
+  small: 4,
+  medium: 8,
+  large: 12,
   xlarge: 20,
-  xxlarge: 25,
-  xxxlarge: 30,
+  xxlarge: 24,
+  xxxlarge: 28,
 };
 
 const property = (type: "Bottom" | "Right", size: Size) => {

@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import React from "react";
 import { css } from "@emotion/react";
-import colorCodes from "../utils/colorCodes";
+import { color } from "../utils/constants/index";
 import { motion } from "framer-motion";
 
 const container = css({
@@ -10,7 +10,7 @@ const container = css({
   justifyContent: "center",
   width: "100vw",
   height: "100vh",
-  backgroundColor: colorCodes.primary,
+  backgroundColor: color.primary,
 });
 
 const visible = {

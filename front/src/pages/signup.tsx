@@ -10,31 +10,12 @@ import AppInput from "../components/form/AppInput";
 import AppButton from "../components/AppButton";
 import OnlyCard from "../components/layout/OnlyCard";
 import Head from "../components/Head";
-import colorCodes from "../utils/colorCodes";
+import { color } from "../utils/constants/index";
 import { textAlign, marginBottom } from "../lib/style/index";
 
 type Props = {
   handleSetLogin?: Function;
 };
-
-const title = css({
-  textAlign: "center",
-  fontSize: "1.8rem",
-  fontWeight: "bold",
-  marginBottom: 25,
-});
-
-const errorList = css({
-  marginTop: 30,
-  padding: 10,
-  border: `solid 2px ${colorCodes.primary}`,
-  backgroundColor: colorCodes.tertiary,
-  listStyle: "square",
-  listStylePosition: "inside",
-  "li:not(:last-child)": {
-    marginBottom: 10,
-  },
-});
 
 const Signup: React.FC<Props> = () => {
   const history = useHistory();
@@ -159,4 +140,23 @@ const Signup: React.FC<Props> = () => {
   );
 };
 
-export default Signup;
+const title = css({
+  textAlign: "center",
+  fontSize: "1.8rem",
+  fontWeight: "bold",
+  marginBottom: 25,
+});
+
+const errorList = css({
+  marginTop: 30,
+  padding: 10,
+  border: `solid 2px ${color.primary}`,
+  backgroundColor: color.tertiary,
+  listStyle: "square",
+  listStylePosition: "inside",
+  "li:not(:last-child)": {
+    marginBottom: 10,
+  },
+});
+
+export { Signup };

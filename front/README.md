@@ -2,6 +2,21 @@
 
 ## 基本構文
 
+### 型キャプチャ
+
+```ts
+type Keys = keyof typeof spacing;
+```
+
+`typeof`でオブジェクト全体の肩を取得。
+`keyof`でキーを`StringLiteralTypes`として取得できる。
+
+### オブジェクトのキーを制限する
+
+```ts
+[k in Type]: {}
+```
+
 ### StringLiteralTypes
 
 ```ts
@@ -138,10 +153,10 @@ useEffect(() => {
 }, [email]); // emailのstateが更新されたと時にuseStateが再び実行される。
 ```
 
-第二引数の配列の中に state を入れることで、監視する値を指定できる。  
+第二引数の配列の中に state を入れることで、監視する値を指定できる。
 指定しなかった場合、全て実行。`[]`を指定した場合、どの値が更新されても再描写されない。
 
-第２引数を`[]`にすることで、ページロードジの初期化処理として使うことができる。  
+第２引数を`[]`にすることで、ページロードジの初期化処理として使うことができる。
 → タイムラインの初期化処理としてつかえそう。
 
 ```js
@@ -160,5 +175,5 @@ useEffect(() => {
 - componentDidUpdate
 - componentWillUnmount
 
-これらをお手軽に実現できるようにしている。ありたがや。  
+これらをお手軽に実現できるようにしている。ありたがや。
 参考:https://reffect.co.jp/react/react-useeffect-understanding

@@ -4,7 +4,7 @@ import { AuthContext } from "../AuthCotainer";
 import { Link } from "react-router-dom";
 import { css } from "@emotion/react";
 
-import colorCodes from "../../utils/colorCodes";
+import { color } from "../../utils/constants/index";
 
 const header = css({
   position: "sticky",
@@ -16,7 +16,7 @@ const header = css({
   justifyContent: "space-between",
   padding: "15px 20px",
   marginBottom: 40,
-  backgroundColor: colorCodes.primary,
+  backgroundColor: color.primary,
   "*:not(:last-child)": {
     marginRight: 20,
   },

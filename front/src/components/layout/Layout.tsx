@@ -1,13 +1,25 @@
+/** @jsxImportSource @emotion/react */
 import React from "react";
-import Header from "./Header";
+import { css } from "@emotion/react";
+import { SideMenu } from "./index";
+import { screen } from "../../utils/index";
 
 const Layout: React.FC = ({ children }) => {
   return (
-    <>
-      <Header />
+    <div css={container}>
+      <SideMenu />
       {children}
-    </>
+    </div>
   );
 };
 
-export default Layout;
+const container = css([
+  screen.md,
+  {
+    margin: "0 auto",
+    display: "flex",
+    alignItems: "flex-start",
+  },
+]);
+
+export { Layout };
