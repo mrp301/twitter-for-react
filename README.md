@@ -40,3 +40,20 @@ npm install
 - https://kenny27.hatenablog.com/entry/2019/01/29/014725
 - https://qiita.com/mtoyopet/items/076b623ac72f4f83c5f6
 - https://masahiro.me/2017/06/devise-token-auth-2/
+
+## 残タスク
+
+- ER 図作成
+- user に情報追加
+  - プロフィール
+  - アイコン
+  - カバー画像
+- ツイート機能
+- プロフィール変更機能
+- ログアウト
+- ページネーション
+- モーダル UI
+- タブ切り替え
+- テストコード
+- storybook
+- firebase?

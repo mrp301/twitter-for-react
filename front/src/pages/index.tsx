@@ -3,7 +3,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { css } from "@emotion/react";
 import Head from "../components/Head";
-import AppButton from "../components/AppButton";
+import { Button } from "../components/Button";
 import OnlyCard from "../components/layout/OnlyCard";
 import { textAlign, marginBottom } from "../lib/style/index";
 
@@ -24,17 +24,17 @@ const Index: React.FC = () => {
         </h1>
         <div css={[marginBottom("medium"), textAlign("center")]}>
           <Link to="/signup">
-            <AppButton type="primary" css={marginBottom("medium")}>
+            <Button type="primary" css={marginBottom("medium")}>
               アカウント作成
-            </AppButton>
+            </Button>
           </Link>
           <Link to="/login">
-            <AppButton type="primary" css={marginBottom("xxlarge")}>
+            <Button type="primary" css={marginBottom("xxlarge")}>
               ログイン
-            </AppButton>
+            </Button>
           </Link>
           <Link to="/home">
-            <AppButton type="nomal">ログインせずタイムラインを見る</AppButton>
+            <Button type="nomal">ログインせずタイムラインを見る</Button>
           </Link>
         </div>
       </OnlyCard>

@@ -147,6 +147,7 @@ const resetStyle = css`
     border-radius: 0;
     font: inherit;
     outline: none;
+    padding: 0;
   }
 
   textarea {

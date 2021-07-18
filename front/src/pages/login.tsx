@@ -13,7 +13,7 @@ import { $axios } from "../lib/axios";
 
 // components
 import AppInput from "../components/form/AppInput";
-import AppButton from "../components/AppButton";
+import { Button } from "../components/Button";
 import OnlyCard from "../components/layout/OnlyCard";
 import { AuthContext } from "../components/AuthCotainer";
 
@@ -111,15 +111,18 @@ const Login: React.FC = () => {
           </li>
         </ul>
         <div css={[marginBottom("medium"), textAlign("center")]}>
-          <AppButton
+          <Button
             type="primary"
+            size="full"
             handleClick={handleLogin}
             css={marginBottom("medium")}
           >
             ログイン
-          </AppButton>
+          </Button>
           <Link to="/signup">
-            <AppButton type="nomal">アカウント作成</AppButton>
+            <Button type="nomal" size="full">
+              アカウント作成
+            </Button>
           </Link>
         </div>
         {!!errors.length && (

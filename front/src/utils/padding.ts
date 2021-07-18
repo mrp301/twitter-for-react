@@ -18,14 +18,14 @@ const createStyle: CreateStyle = (key, type) => {
       }),
     };
   }
-  if (type === "x") {
+  if (type === "y") {
     return {
       [key]: css({
         padding: `${spacing[key]} 0`,
       }),
     };
   }
-  if (type === "y") {
+  if (type === "x") {
     return {
       [key]: css({
         padding: `0 ${spacing[key]}`,
@@ -69,7 +69,6 @@ const createObject = (type: Type) => {
   return keys.reduce(
     (acc, key) => {
       const style = createStyle(key, type);
-      console.log(style);
 
       return { ...acc, ...style };
     },

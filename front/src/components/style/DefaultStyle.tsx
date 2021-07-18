@@ -15,6 +15,7 @@ const defaultStyle = css`
     min-height: 100vh;
     background-image: url(${tile});
     background-size: 130px;
+    width: 100%;
   }
 
   main {

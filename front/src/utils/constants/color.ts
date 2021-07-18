@@ -9,7 +9,7 @@ const color = {
     black: "#14171a",
   },
   gray: {
-    dark: "#657786",
+    dark: "#6d6d6d",
     light: "#aabbc2",
     extraLight: "e1e8ed",
     extraExtraLight: "#f5f8fa",

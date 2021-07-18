@@ -1,66 +1,39 @@
 /** @jsxImportSource @emotion/react */
 import React, { useState, useEffect, useContext } from "react";
 import { css } from "@emotion/react";
-// style
-import { padding } from "../utils/index";
-import { color } from "../utils/constants/index";
-import { SlideIn } from "../components/motion/index";
 
-import ReactLoading from "react-loading";
+// hooks
+import { useTweets } from "../hooks/index";
+
+// style
+import { padding, margin } from "../utils/index";
+import { color } from "../utils/constants/index";
 
 // modules
 import { $axios } from "../lib/axios";
 
 // components
-import AppInput from "../components/form/AppInput";
-import AppButton from "../components/AppButton";
 import Head from "../components/Head";
-import { Tweet } from "../components/Tweet";
+import AppInput from "../components/form/AppInput";
+import { Button } from "../components/Button";
+import { TweetList } from "../components/TweetList";
 import { AuthContext } from "../components/AuthCotainer";
 import { Layout } from "../components/layout/index";
+import { UserIcon } from "../components/UserIcon";
 
 type Props = {
   handleSetLogin?: Function;
 };
 
-type Tl = {
-  data: {
-    data: [
-      {
-        id: string;
-        userId: string;
-        content: string;
-        createdAt: string;
-        updatedAt: string;
-      }
-    ];
-  };
-};
-
 const Home: React.FC<Props> = () => {
   const [tweet, setTweet] = useState("");
-  const [tl, setTL] = useState<Tl | "">("");
-
+  const tweets = useTweets();
   const { state } = useContext(AuthContext);
-
-  useEffect(() => {
-    let unmounted = false;
-    (async () => {
-      if (!unmounted) {
-        const res: Tl = await $axios.get("tweets");
-        setTL(res);
-      }
-    })();
-    // https://takamints.hatenablog.jp/entry/cleanup-an-async-use-effect-hook-of-react-function-componet
-
-    return () => {
-      unmounted = true;
-    };
-  }, []);
+  const user = state.user;
 
   const sendTweet = async (): Promise<void> => {
     const params = {
-      user_id: state.user.id,
+      user_id: user.id,
       content: tweet,
     };
     try {
@@ -74,46 +47,32 @@ const Home: React.FC<Props> = () => {
     <>
       <Head title="ホーム" />
       <Layout>
-        <div css={colomun}>
-          <main css={main}>
-            <div css={[tlHeader, padding.all[4]]}>ホーム</div>
-            {!!tl ? (
-              <SlideIn>
-                {tl.data.data.map((tweet) => (
-                  <Tweet
-                    key={tweet.id}
-                    name="emo"
-                    content={tweet.content}
-                    update={tweet.updatedAt}
-                  />
-                ))}
-              </SlideIn>
-            ) : (
-              <ReactLoading type="spin" height={32} width={32} css={loading} />
-            )}
-            <AppInput
-              key="tweet"
-              name="tweet"
-              value={tweet}
-              setValue={setTweet}
-              placeholder="いまどうしてる？"
-              type="text"
-            />
-            <AppButton type="nomal" handleClick={sendTweet}>
-              ツイートする
-            </AppButton>
-          </main>
-        </div>
+        <main css={main}>
+          <div css={[tlHeader, padding.all[4]]}>ホーム</div>
+          <div css={tweetContainer}>
+            <div css={[tweetInner, margin.bottom[2]]}>
+              <UserIcon userId="emo" size="nomal" />
+              <AppInput
+                key="tweet"
+                name="tweet"
+                value={tweet}
+                setValue={setTweet}
+                placeholder="いまどうしてる？"
+                type="textarea"
+              />
+            </div>
+            <div css={inputContainer}>
+              <Button type="primary" size="nomal" handleClick={sendTweet}>
+                ツイートする
+              </Button>
+            </div>
+          </div>
+          <TweetList tweets={tweets} />
+        </main>
       </Layout>
     </>
   );
 };
-
-const colomun = css({
-  margin: "0 auto",
-  width: "100%",
-  borderRight: `solid 1px ${color.gray.dark}`,
-});
 
 const main = css({
   width: "100%",
@@ -123,15 +82,26 @@ const main = css({
 
 const tlHeader = css({
   fontWeight: "bold",
-  textAlign: "center",
+  textAlign: "left",
   borderBottom: `solid 1px ${color.gray.dark}`,
 });
 
-const loading = css([
-  padding.all[2],
-  {
-    margin: "0 auto",
-  },
-]);
+const tweetContainer = [
+  padding.y[2],
+  padding.left[4],
+  padding.right[4],
+  css({
+    borderBottom: `solid 1px ${color.gray.dark}`,
+  }),
+];
+
+const tweetInner = css({
+  display: "flex",
+  alignItems: "flex-start",
+});
+
+const inputContainer = css({
+  textAlign: "right",
+});
 
 export { Home };

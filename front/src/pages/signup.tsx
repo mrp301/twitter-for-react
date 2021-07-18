@@ -7,7 +7,7 @@ import { useHistory } from "react-router-dom";
 import camelCaseKeys from "camelcase-keys";
 
 import AppInput from "../components/form/AppInput";
-import AppButton from "../components/AppButton";
+import { Button } from "../components/Button";
 import OnlyCard from "../components/layout/OnlyCard";
 import Head from "../components/Head";
 import { color } from "../utils/constants/index";
@@ -117,15 +117,11 @@ const Signup: React.FC<Props> = () => {
           </li>
         </ul>
         <div css={[textAlign("center"), marginBottom("small")]}>
-          <AppButton
-            type="primary"
-            handleClick={handleClick}
-            css={marginBottom("medium")}
-          >
+          <Button type="primary" handleClick={handleClick} css={marginBottom("medium")}>
             アカウント作成
-          </AppButton>
+          </Button>
           <Link to="/login">
-            <AppButton type="nomal">ログイン</AppButton>
+            <Button type="nomal">ログイン</Button>
           </Link>
         </div>
         {!!errors.length && (

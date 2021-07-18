@@ -6,24 +6,28 @@ import { padding } from "../utils/index";
 import { color } from "../utils/constants/index";
 import { calculationTime } from "../lib/calculationTime";
 
-type Props = {
-  name: string;
+import { UserIcon } from "../components/UserIcon";
+
+export type Tweet = {
+  id: number;
+  userId: number;
   content: string;
-  update: string;
+  updatedAt: string;
   images?: string[];
 };
 
-const Tweet: React.FC<Props> = ({ name, content, update }) => {
+const TweetItem: React.FC<Tweet> = (props) => {
+  const { userId, content, updatedAt } = props;
+  const name = "emo";
+
   return (
     <div css={contaiiner}>
       <div css={body}>
-        <div css={[userIcon, marginRight("medium")]}>
-          <img src={`${process.env.PUBLIC_URL}/user/${name}Icon.png`} alt={name} />
-        </div>
+        <UserIcon userId={name} css={marginRight("medium")} />
         <div css={content}>
           <div css={marginBottom("small")}>
-            <span css={[userName, marginRight("medium")]}>{name}</span>
-            <span css={updateAt}>{calculationTime(update)}</span>
+            <span css={[userName, marginRight("medium")]}>{userId}</span>
+            <span css={updateAt}>{calculationTime(updatedAt)}</span>
           </div>
           <div>{content}</div>
         </div>
@@ -33,7 +37,9 @@ const Tweet: React.FC<Props> = ({ name, content, update }) => {
 };
 
 const contaiiner = [
-  padding.all[2],
+  padding.y[2],
+  padding.left[4],
+  padding.right[4],
   css({
     borderBottom: `solid 1px ${color.gray.dark}`,
   }),
@@ -44,24 +50,13 @@ const body = css({
   alignItems: "flex-start",
 });
 
-const userIcon = css({
-  flex: "0 0 auto",
-  width: 42,
-  height: 42,
-  borderRadius: "50%",
-  overflow: "hidden",
-  "& > img": {
-    width: "100%",
-  },
-});
-
 const updateAt = css({
+  color: color.gray.dark,
   fontSize: 12,
-  color: "#8e8e8e",
 });
 
 const userName = css({
   fontWeight: "bold",
 });
 
-export { Tweet };
+export { TweetItem };

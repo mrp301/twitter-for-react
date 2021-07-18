@@ -18,14 +18,14 @@ const createStyle: CreateStyle = (key, type) => {
       }),
     };
   }
-  if (type === "x") {
+  if (type === "y") {
     return {
       [key]: css({
         margin: `${spacing[key]} 0`,
       }),
     };
   }
-  if (type === "y") {
+  if (type === "x") {
     return {
       [key]: css({
         margin: `0 ${spacing[key]}`,
@@ -69,11 +69,10 @@ const createObject = (type: Type) => {
   return keys.reduce(
     (acc, key) => {
       const style = createStyle(key, type);
-      console.log(style);
 
       return { ...acc, ...style };
     },
-    { "0": css({ margin: 0 }) }
+    { 0: css({ margin: 0 }) }
   );
 };
 

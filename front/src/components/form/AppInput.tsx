@@ -1,6 +1,8 @@
 /** @jsxImportSource @emotion/react */
 import { css, SerializedStyles } from "@emotion/react";
+import { transform } from "framer-motion";
 import { color } from "../../utils/constants/index";
+import { padding, margin } from "../../utils/index";
 
 type Props = {
   key: string;
@@ -13,14 +15,11 @@ type Props = {
   type: string;
 };
 
-const appInput: React.FC<Props> = (props) => {
+const AppInput: React.FC<Props> = (props) => {
   const input = css(
     {
-      padding: 10,
       width: "100%",
-      borderRadius: 4,
-      border: "solid 1px #fff",
-      backgroundColor: color.tertiary,
+      color: color.main.black,
     },
     props.cssProps
   );
@@ -31,18 +30,37 @@ const appInput: React.FC<Props> = (props) => {
 
   return (
     <>
-      <input
-        id={props.name}
-        name={props.name}
-        type={props.type}
-        value={props.value}
-        css={input}
+      <div
+        css={[inputContainer, padding.y[1], padding.right[2], padding.left[2]]}
         className={props.className}
-        placeholder={props.placeholder}
-        onChange={(e) => handleChange(e)}
-      />
+      >
+        <label css={[label]}>{props.placeholder}</label>
+        <input
+          id={props.name}
+          name={props.name}
+          type={props.type}
+          value={props.value}
+          css={[input, margin.top[5], margin.bottom[1]]}
+          onChange={(e) => handleChange(e)}
+        />
+      </div>
     </>
   );
 };
 
-export default appInput;
+const inputContainer = css({
+  position: "relative",
+  width: "100%",
+  borderRadius: 4,
+  border: `solid 1px ${color.gray.dark}`,
+});
+
+const label = css({
+  position: "absolute",
+  top: "8px",
+  left: "9px",
+  fontSize: 10,
+  color: color.gray.dark,
+});
+
+export default AppInput;

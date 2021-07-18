@@ -12,11 +12,11 @@ const AuthProvider: React.FC = ({ children }) => {
   );
 };
 
-const AuthContainer: React.FC = ({ children }): JSX.Element => {
+const AuthContainer: React.FC = ({ children }) => {
   const { state } = useContext(AuthContext);
-  return (
-    <Route>{state.auth.uid !== "" ? <>{children}</> : <Redirect to="/login" />}</Route>
-  );
+  const isLogin = state.auth.uid !== "";
+
+  return <Route>{isLogin ? <>{children}</> : <Redirect to="/login" />}</Route>;
 };
 
 export { AuthContext, AuthProvider, AuthContainer };
