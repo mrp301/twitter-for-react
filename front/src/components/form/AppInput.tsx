@@ -1,53 +1,66 @@
 /** @jsxImportSource @emotion/react */
-import { css, SerializedStyles } from '@emotion/react'
-import colorCodes from '../../utils/colorCodes';
+import { css, SerializedStyles } from "@emotion/react";
+import { transform } from "framer-motion";
+import { color } from "../../utils/constants/index";
+import { padding, margin } from "../../utils/index";
 
 type Props = {
-  label: string,
-  key: string,
-  name: string,
-  value: string,
-  setValue: React.Dispatch<React.SetStateAction<string>>,
-  placeholder: string,
-  cssProps?: SerializedStyles,
+  key: string;
+  name: string;
+  value: string;
+  setValue: React.Dispatch<React.SetStateAction<string>>;
+  placeholder: string;
+  cssProps?: SerializedStyles;
+  className?: string;
+  type: string;
 };
 
-const appInput: React.FC<Props> = (props) => {
-  const label = css({
-    display: 'block',
-    marginBottom: 8,
-    cursor: 'default',
-  });
-
+const AppInput: React.FC<Props> = (props) => {
   const input = css(
     {
-      padding: '10px 5px',
-      width: '100%',
-      borderRadius: 4,
-      border: 'solid 1px #fff',
-      backgroundColor: colorCodes.tertiary,
+      width: "100%",
+      color: color.main.black,
     },
-    props.cssProps,
+    props.cssProps
   );
 
   const handleChange = ({ target }: React.ChangeEvent<HTMLInputElement>): void => {
-    props.setValue(target.value)
+    props.setValue(target.value);
   };
 
   return (
     <>
-      <label css={label}>{props.label}</label>
-      <input
-        id={props.name}
-        name={props.name}
-        type="text"
-        value={props.value}
-        css={input}
-        placeholder={props.placeholder}
-        onChange={e => handleChange(e)}
-      />
+      <div
+        css={[inputContainer, padding.y[1], padding.right[2], padding.left[2]]}
+        className={props.className}
+      >
+        <label css={[label]}>{props.placeholder}</label>
+        <input
+          id={props.name}
+          name={props.name}
+          type={props.type}
+          value={props.value}
+          css={[input, margin.top[5], margin.bottom[1]]}
+          onChange={(e) => handleChange(e)}
+        />
+      </div>
     </>
-  )
-}
+  );
+};
 
-export default appInput;
+const inputContainer = css({
+  position: "relative",
+  width: "100%",
+  borderRadius: 4,
+  border: `solid 1px ${color.gray.dark}`,
+});
+
+const label = css({
+  position: "absolute",
+  top: "8px",
+  left: "9px",
+  fontSize: 10,
+  color: color.gray.dark,
+});
+
+export default AppInput;

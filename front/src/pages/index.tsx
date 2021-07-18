@@ -1,165 +1,45 @@
 /** @jsxImportSource @emotion/react */
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { css } from '@emotion/react'
-import { $axios } from '../lib/axios';
-import { useHistory } from "react-router-dom";
-import camelCaseKeys from 'camelcase-keys';
+import React from "react";
+import { Link } from "react-router-dom";
+import { css } from "@emotion/react";
+import Head from "../components/Head";
+import { Button } from "../components/Button";
+import OnlyCard from "../components/layout/OnlyCard";
+import { textAlign, marginBottom } from "../lib/style/index";
 
-import AppInput from '../components/form/AppInput';
-import AppButton from '../components/AppButton';
-import colorCodes from '../utils/colorCodes';
-
-type Props = {
-  handleSetLogin?: Function,
-}
-
-const container = css({
-  margin: '0 auto',
-  maxWidth: 540,
-  padding: '30px 20px',
-  borderRadius: 10,
+const h1 = css({
+  textAlign: "center",
+  fontSize: 20,
+  fontWeight: "bold",
+  marginBottom: "20px",
 });
 
-const title = css({
-  textAlign: 'center',
-  fontSize: '1.8rem',
-  fontWeight: 'bold',
-  marginBottom: 10,
-});
-
-const errorList = css({
-  marginTop: 30,
-  padding: 10,
-  border: `solid 2px ${colorCodes.primary}`,
-  backgroundColor: colorCodes.tertiary,
-  listStyle: 'square',
-  listStylePosition: 'inside',
-  'li:not(:last-child)': {
-    marginBottom: 10,
-  },
-})
-
-const mgBottom = css({
-  marginBottom: 15,
-});
-
-
-const Index: React.FC<Props> = () => {
-  const history = useHistory();
-  useEffect(() => {
-    document.title = '新規アカウント作成';
-  });
-
-  const [name, setName] = useState('');
-  const [nickname, setNickname] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [password_confirmation, setPassword_confirmation] = useState('');
-  const [errors, setErrors] = useState<string[]>([]);
-
-  const createUser = async(): Promise<void> => {
-    try {
-      await $axios.post('/', {
-        name,
-        nickname,
-        email,
-        password,
-        password_confirmation,
-      });
-      history.push('/login');
-    } catch(error) {
-      const { fullMessages }: {fullMessages: string[]} = camelCaseKeys(error.response.data.errors);
-      setErrors(fullMessages);
-      console.error(fullMessages);
-    }
-  }
-
-  const handleClick = (): void => {
-    console.log(`${name}:${nickname}:${email}:${password}:${password_confirmation}`);
-    if (!name || !nickname || !email || !password || !password_confirmation) {
-      alert('未入力項目があります。');
-      return;
-    }
-    createUser();
-  }
-
+const Index: React.FC = () => {
   return (
     <>
-      <div css={container}>
-        <div css={title}>アカウントを作成</div>
-        <ul className="u-margin-bottom--large">
-          <li>
-            <AppInput
-              label="ユーザー名"
-              key="name"
-              name="name"
-              value={name}
-              setValue={setName}
-              placeholder="ユーザー名"
-              cssProps={mgBottom}
-            />
-          </li>
-          <li>
-            <AppInput
-              label="ニックネーム"
-              key="nickname"
-              name="nickname"
-              value={nickname}
-              setValue={setNickname}
-              placeholder="ニックネーム"
-              cssProps={mgBottom}
-            />
-          </li>
-          <li>
-            <AppInput
-              label="email"
-              key="email"
-              name="email"
-              value={email}
-              setValue={setEmail}
-              placeholder="email"
-              cssProps={mgBottom}
-            />
-          </li>
-          <li>
-            <AppInput
-              label="password"
-              key="password"
-              name="password"
-              value={password}
-              setValue={setPassword}
-              placeholder="password"
-              cssProps={mgBottom}
-            />
-          </li>
-          <li>
-            <AppInput
-              label="パスワード確認"
-              key="password_confirmation"
-              name="password_confirmation"
-              value={password_confirmation}
-              setValue={setPassword_confirmation}
-              placeholder="パスワード確認"
-            />
-          </li>
-        </ul>
-        <div className="u-margin-bottom--large">
-          <AppButton handleClick={handleClick}>
+      <Head title="「いま」を見つけよう" />
+      <OnlyCard>
+        <h1 css={h1}>
+          <img src={`${process.env.PUBLIC_URL}/logo.svg`} alt="Pristagram" width="200" />
+        </h1>
+        <div css={[marginBottom("medium"), textAlign("center")]}>
+          <Link to="/signup">
+            <Button type="primary" css={marginBottom("medium")}>
               アカウント作成
-          </AppButton>
+            </Button>
+          </Link>
+          <Link to="/login">
+            <Button type="primary" css={marginBottom("xxlarge")}>
+              ログイン
+            </Button>
+          </Link>
+          <Link to="/home">
+            <Button type="nomal">ログインせずタイムラインを見る</Button>
+          </Link>
         </div>
-        {!!errors.length && (
-          <ul css={errorList}>
-            {errors.map(error =>
-              <li key={error}>{error}</li>
-            )}
-          </ul>
-        )}
-        <Link to="/login">ログイン</Link>
-      </div>
+      </OnlyCard>
     </>
   );
-}
+};
 
-export default Index;
+export { Index };

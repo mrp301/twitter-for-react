@@ -1,13 +1,12 @@
-/** @jsxImportSource @emotion/react */
-import React from 'react';
-import { css } from '@emotion/react'
+import { css } from "@emotion/react";
 
 // images
-import tile from '../../images/girls_tile.png';
+import tile from "../../images/girls_tile.png";
 
 const defaultStyle = css`
   html {
-    font-family: "Meiryo", "Hiragino Kaku Gothic ProN", "Hiragino Sans", sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu,
+      Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
     font-size: 62.5%;
   }
 
@@ -16,6 +15,7 @@ const defaultStyle = css`
     min-height: 100vh;
     background-image: url(${tile});
     background-size: 130px;
+    width: 100%;
   }
 
   main {
@@ -39,6 +39,6 @@ const defaultStyle = css`
     padding: 15px;
     background-color: #fff;
   }
-`
+`;
 
 export default defaultStyle;

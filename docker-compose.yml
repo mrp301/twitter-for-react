@@ -1,4 +1,4 @@
-version: '3'
+version: "3"
 
 services:
   db:
@@ -10,7 +10,7 @@ services:
     ports:
       - 5433:5432
   api:
-    build: 
+    build:
       context: ./api/
       dockerfile: Dockerfile
     command: /bin/sh -c "rm -f /myapp/tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
@@ -26,15 +26,16 @@ services:
     depends_on:
       - db
   front:
-    build: 
+    build:
       context: ./front/
       dockerfile: Dockerfile
     volumes:
       - ./front:/usr/src/app
+      # - /app/node_modules
     environment:
       - CHOKIDAR_USEPOLLING=true
     ports:
       - 8000:3000
 volumes:
   postgres-data:
-    driver: local
+  # node_modules:
