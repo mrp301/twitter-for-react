@@ -1,18 +1,36 @@
 class TweetsController < ApplicationController
   before_action :set_tweet, only: [:show, :update, :destroy]
-  before_action :authenticate_api_user!, only: [:show, :update, :destroy]
+  before_action :authenticate_api_user!, only: [:show, :update, :destroy,]
+
+  # get /tweets/:id/mytweet
+  def mytweet
+    user_id = params[:id]
+    tweets = Tweet
+      .joins(:user)
+      .where(users: { id: user_id })
+      .order(created_at: :desc)
+      .select("tweets.id, content, users.id, name, nickname, tweets.created_at")
+
+      render json: { data: tweets }
+  end
 
   # GET /tweets
   # GET /tweets.json
   def index
-    tweets = Tweet.order(created_at: :asc)
+    tweets = Tweet
+      .joins(:user)
+      .where(users: { id: 859673626 })
+      .order(created_at: :desc)
+      .select("tweets.id, content, users.id, name, nickname, tweets.created_at")
+
     render json: { data: tweets }
-    # @tweets = Tweet.all
   end
 
   # GET /tweets/1
   # GET /tweets/1.json
   def show
+    tweets = Tweet.order(created_at: :desc)
+    render json: { data: tweets }
   end
 
   # POST /tweets
@@ -21,7 +39,8 @@ class TweetsController < ApplicationController
     @tweet = Tweet.new(tweet_params)
 
     if @tweet.save
-      render :show, status: :created, location: @tweet
+      tweets = Tweet.joins(:user).order(created_at: :desc)
+      render json: { data: tweets }
     else
       render json: @tweet.errors, status: :unprocessable_entity
     end

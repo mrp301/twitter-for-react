@@ -17,7 +17,7 @@ const Layout: React.FC = ({ children }) => {
 };
 
 const container = css([
-  screen.md,
+  // screen.md,
   {
     margin: "0 auto",
     display: "flex",
@@ -29,7 +29,7 @@ const colomun = css({
   margin: "0 auto",
   width: "100%",
   minHeight: "100vh",
-  borderRight: `solid 1px ${color.gray.dark}`,
+  borderRight: `solid 1px ${color.main.white}`,
 });
 
 export { Layout };

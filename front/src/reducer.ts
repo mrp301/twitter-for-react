@@ -2,13 +2,13 @@
 import { State, Actions } from "./types";
 import { getSession } from "./lib/session";
 
-type Auth = {
+export type Auth = {
   uid: string;
   client: string;
   token: string;
 };
 
-type User = {
+export type User = {
   id: number;
   email: string;
   provider: string;
@@ -17,6 +17,7 @@ type User = {
   name: string;
   nickname: string;
   image?: string;
+  profile?: string;
 };
 
 const auth = getSession("auth") as Auth | null;
@@ -39,7 +40,7 @@ export const initialState: State =
         },
       };
 
-export const reducer = (state: State, action: Actions): State => {
+const reducer = (state: State, action: Actions): State => {
   switch (action.type) {
     case "SET_TOKEN":
       return { ...state, auth: { ...action.auth } };
@@ -49,3 +50,5 @@ export const reducer = (state: State, action: Actions): State => {
       return state;
   }
 };
+
+export { reducer };

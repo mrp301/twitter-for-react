@@ -1,8 +1,8 @@
 /** @jsxImportSource @emotion/react */
 import React from "react";
 import { css } from "@emotion/react";
-import { marginBottom, marginRight } from "../lib/style/index";
-import { padding } from "../utils/index";
+import { Link } from "react-router-dom";
+import { padding, margin } from "../utils/index";
 import { color } from "../utils/constants/index";
 import { calculationTime } from "../lib/calculationTime";
 
@@ -10,26 +10,32 @@ import { UserIcon } from "../components/UserIcon";
 
 export type Tweet = {
   id: number;
-  userId: number;
+  name: string;
+  nickname: string;
   content: string;
   updatedAt: string;
   images?: string[];
 };
 
 const TweetItem: React.FC<Tweet> = (props) => {
-  const { userId, content, updatedAt } = props;
-  const name = "emo";
+  const { name, nickname, content, updatedAt } = props;
 
   return (
     <div css={contaiiner}>
       <div css={body}>
-        <UserIcon userId={name} css={marginRight("medium")} />
+        <Link to={`/user/${name}`}>
+          <UserIcon userId="emo" css={margin.right[2]} />
+        </Link>
         <div css={content}>
-          <div css={marginBottom("small")}>
-            <span css={[userName, marginRight("medium")]}>{userId}</span>
-            <span css={updateAt}>{calculationTime(updatedAt)}</span>
-          </div>
-          <div>{content}</div>
+          <Link to={`/user/${name}`}>
+            <div css={margin.bottom[2]}>
+              <span css={[userName, margin.right[2]]}>{nickname}</span>
+              <span css={[userId, margin.right[2]]}>@{name}</span>
+              <span css={updateAt}>{calculationTime(updatedAt)}</span>
+            </div>
+          </Link>
+          <div css={margin.bottom[4]}>{content}</div>
+          {/* <div>リプ/いいね/</div> */}
         </div>
       </div>
     </div>
@@ -37,10 +43,10 @@ const TweetItem: React.FC<Tweet> = (props) => {
 };
 
 const contaiiner = [
-  padding.y[2],
-  padding.left[4],
-  padding.right[4],
+  padding.y[3],
+  padding.x[4],
   css({
+    fontSize: 15,
     borderBottom: `solid 1px ${color.gray.dark}`,
   }),
 ];
@@ -52,11 +58,18 @@ const body = css({
 
 const updateAt = css({
   color: color.gray.dark,
-  fontSize: 12,
 });
 
 const userName = css({
   fontWeight: "bold",
+  color: color.main.black,
+  ":hover": {
+    textDecoration: "underline",
+  },
+});
+
+const userId = css({
+  color: color.gray.dark,
 });
 
 export { TweetItem };

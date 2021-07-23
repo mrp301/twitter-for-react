@@ -3,7 +3,7 @@ import { $axios } from "../lib/axios";
 
 import { Tweet } from "../components/TweetItem";
 
-const useTweets = () => {
+const useTweets = <T,>(userId: T) => {
   const [tweets, setTweets] = useState<Tweet[]>([]);
 
   // https://takamints.hatenablog.jp/entry/cleanup-an-async-use-effect-hook-of-react-function-componet
@@ -11,7 +11,7 @@ const useTweets = () => {
     let unmounted = false;
     (async () => {
       if (!unmounted) {
-        const res = await $axios.get("tweets");
+        const res = await $axios.get(`tweets/${userId}/mytweet`);
         setTweets(res.data.data);
       }
     })();
@@ -19,9 +19,9 @@ const useTweets = () => {
     return () => {
       unmounted = true;
     };
-  }, []);
+  }, [userId]);
 
-  return tweets;
+  return { tweets, setTweets };
 };
 
 export { useTweets };

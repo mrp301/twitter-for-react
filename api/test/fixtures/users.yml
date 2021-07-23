@@ -1,0 +1,69 @@
+momoyama:
+  name: momoyama
+  nickname: 桃山みらい
+  email: momoyama.mirai@example.com
+  uid: momoyama.mirai@example.com
+  encrypted_password: <%= Devise::Encryptor.digest(User, 'password') %>
+  profile: |
+    きらりヶ丘中学校３年生。幼なじみのえも、同級生のりんかと3人でグループ「ミラクル☆キラッツ」として活躍中。
+    人が普段は気づかない“キラッときらめく良い所”を見つけるのが得意。
+    ジュエルコレクションで優勝し見事ダイヤモンドアイドルとなったが、新たな目標・イルミナージュクイーンを目指してプリンセスカップに挑む。
+    口癖は「キラッと☆」。
+
+moegi:
+  name: moegi
+  nickname: 萌黄えも
+  email: moegi.emo@example.com
+  uid: moegi.emo@example.com
+  encrypted_password: <%= Devise::Encryptor.digest(User, 'password') %>
+  profile: |
+    きらりヶ丘中学校３年生。みらいの幼なじみ。
+    スポーツは得意だが勉強は苦手。考えるより先に行動するタイプ。誰かを応援することが好きで、基本、お節介。
+    メルティックスターの赤城あんなとは「ケンカするほど仲がいい」友達。
+    口癖は「えもい」。
+
+aoba:
+  name: aoba
+  nickname: 青葉りんか
+  email: aoba.rinka@example.com
+  uid: aoba.rinka@example.com
+  encrypted_password: <%= Devise::Encryptor.digest(User, 'password') %>
+  profile: |
+    きらりヶ丘中学校３年生。みらい、えもの同級生。
+    優等生タイプのしっかり者で、グループのまとめ役になることが多い。
+    「かわいい」ものに対する感覚が少し他人とズレていて、自らデザインした「シルクちゃん」を世に広めたいと秘かに狙っている。
+
+akagi:
+  name: akagi
+  nickname: 赤城あんな
+  email: akagi.anna@example.com
+  uid: akagi.anna@example.com
+  encrypted_password: <%= Devise::Encryptor.digest(User, 'password') %>
+  profile: |
+    さら、めると3人で「メルティックスター」として活躍中の大人気プリ☆チャンアイドル。
+    超お嬢様で、自分でプロデュースするチャンネルもセレブな雰囲気だが、素顔は子供っぽくワガママ。
+    えもとは顔をあわせばケンカする仲。
+    赤城財閥の次期当主として、カガヤキ・コーポレーションとも交流があるようで…。
+
+midorikawa:
+  name: midorikawa
+  nickname: 緑川さら
+  email: midorikawa.sara@example.com
+  uid: midorikawa.sara@example.com
+  encrypted_password: <%= Devise::Encryptor.digest(User, 'password') %>
+  profile: |
+    あんなの親友。クールでロックでボーイッシュ。一人称はボク。
+    サバサバした性格で、「ミラクル☆キラッツ」のメンバーにも気さくに話しかけてくる。
+    実はかわいいもの好きという自分を周囲にはひた隠しにしていたが、最近はかわいい自分も悪くないと思い始めている。
+
+shido:
+  name: shido
+  nickname: 紫藤める
+  email: sido.meru@example.com
+  uid: sido.meru@example.com
+  encrypted_password: <%= Devise::Encryptor.digest(User, 'password') %>
+  profile: |
+    「メルティックスター」のメンバー。一人称は「めるめる」。
+    頭脳は天才的だが性格は天然で、とらえどころのない行動に周囲は振り回されがち。
+    甘いものに目がなく、見た目に似合わず食いしん坊。誰とでもすぐに仲良くなれるのが特技。
+    両親とも宇宙で仕事をしているため不在で、あんなの屋敷の敷地内で一人暮らしをしている。

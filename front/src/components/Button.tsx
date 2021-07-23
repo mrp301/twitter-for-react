@@ -13,9 +13,15 @@ type Props = {
   className?: string;
 };
 
-const Button: React.FC<Props> = ({ children, type, size = "nomal", handleClick }) => {
+const Button: React.FC<Props> = ({
+  children,
+  type,
+  size = "nomal",
+  handleClick,
+  className,
+}) => {
   return !!handleClick ? (
-    <button css={button(type, size)} onClick={() => handleClick()}>
+    <button css={button(type, size)} className={className} onClick={() => handleClick()}>
       {children}
     </button>
   ) : (

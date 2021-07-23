@@ -1,41 +1,81 @@
 /** @jsxImportSource @emotion/react */
-import React, { useState } from "react";
+import React, { useState, useReducer } from "react";
 import { Link } from "react-router-dom";
 import { css } from "@emotion/react";
-import { $axios } from "../lib/axios";
 import { useHistory } from "react-router-dom";
 import camelCaseKeys from "camelcase-keys";
 
+// components
 import AppInput from "../components/form/AppInput";
 import { Button } from "../components/Button";
 import OnlyCard from "../components/layout/OnlyCard";
 import Head from "../components/Head";
+
+// utils
+import { $axios } from "../lib/axios";
 import { color } from "../utils/constants/index";
 import { textAlign, marginBottom } from "../lib/style/index";
+import { reducer, initialState } from "../modules/index";
 
 type Props = {
   handleSetLogin?: Function;
 };
+type FormsKey = keyof typeof initialState;
+type OnChange = (key: FormsKey) => (e: React.ChangeEvent<HTMLInputElement>) => void;
+
+type Forms = {
+  name: FormsKey;
+  placeholder: string;
+  inputType: "text" | "password" | "email";
+}[];
+
+const forms: Forms = [
+  {
+    name: "name",
+    placeholder: "ユーザーID",
+    inputType: "text",
+  },
+  {
+    name: "nickname",
+    placeholder: "ユーザー名",
+    inputType: "text",
+  },
+  {
+    name: "email",
+    placeholder: "momoyama.mirai@example.com",
+    inputType: "email",
+  },
+  {
+    name: "password",
+    placeholder: "パスワード",
+    inputType: "password",
+  },
+  {
+    name: "password_confirmation",
+    placeholder: "パスワード確認",
+    inputType: "password",
+  },
+];
 
 const Signup: React.FC<Props> = () => {
   const history = useHistory();
-
-  const [name, setName] = useState("");
-  const [nickname, setNickname] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [password_confirmation, setPassword_confirmation] = useState("");
+  const [state, dispatch] = useReducer(reducer, initialState);
   const [errors, setErrors] = useState<string[]>([]);
+
+  const onChange: OnChange = (key) => {
+    return (e): void => {
+      const value = e.target.value;
+      dispatch({
+        type: "SET_STATE",
+        key,
+        value,
+      });
+    };
+  };
 
   const createUser = async (): Promise<void> => {
     try {
-      await $axios.post("api/v1/auth/", {
-        name,
-        nickname,
-        email,
-        password,
-        password_confirmation,
-      });
+      await $axios.post("api/v1/auth/", { ...state });
       history.push("/login");
     } catch (error) {
       const { fullMessages }: { fullMessages: string[] } = camelCaseKeys(
@@ -47,8 +87,9 @@ const Signup: React.FC<Props> = () => {
   };
 
   const handleClick = (): void => {
-    console.log(`${name}:${nickname}:${email}:${password}:${password_confirmation}`);
-    if (!name || !nickname || !email || !password || !password_confirmation) {
+    const keys = Object.keys(state) as FormsKey[];
+    const inValid = keys.every((key) => !state[key]);
+    if (inValid) {
       alert("未入力項目があります。");
       return;
     }
@@ -61,60 +102,19 @@ const Signup: React.FC<Props> = () => {
       <OnlyCard>
         <div css={title}>アカウントを作成</div>
         <ul css={marginBottom("large")}>
-          <li>
-            <AppInput
-              key="name"
-              name="name"
-              value={name}
-              setValue={setName}
-              placeholder="ユーザー名"
-              css={marginBottom("small")}
-              type="text"
-            />
-          </li>
-          <li>
-            <AppInput
-              key="nickname"
-              name="nickname"
-              value={nickname}
-              setValue={setNickname}
-              placeholder="ニックネーム"
-              css={marginBottom("small")}
-              type="text"
-            />
-          </li>
-          <li>
-            <AppInput
-              key="email"
-              name="email"
-              value={email}
-              setValue={setEmail}
-              placeholder="email"
-              css={marginBottom("small")}
-              type="email"
-            />
-          </li>
-          <li>
-            <AppInput
-              key="password"
-              name="password"
-              value={password}
-              setValue={setPassword}
-              placeholder="password"
-              css={marginBottom("small")}
-              type="password"
-            />
-          </li>
-          <li>
-            <AppInput
-              key="password_confirmation"
-              name="password_confirmation"
-              value={password_confirmation}
-              setValue={setPassword_confirmation}
-              placeholder="パスワード確認"
-              type="password"
-            />
-          </li>
+          {forms.map(({ name, placeholder, inputType }) => (
+            <li key={name}>
+              <AppInput
+                key={name}
+                name={name}
+                value={state[name]}
+                onChange={onChange(name)}
+                placeholder={placeholder}
+                type={inputType}
+                css={marginBottom("small")}
+              />
+            </li>
+          ))}
         </ul>
         <div css={[textAlign("center"), marginBottom("small")]}>
           <Button type="primary" handleClick={handleClick} css={marginBottom("medium")}>

@@ -3,9 +3,12 @@ import React from "react";
 import { useModal } from "../hooks/index";
 import { Link } from "react-router-dom";
 import { css } from "@emotion/react";
+
+// utils
 import { padding, margin } from "../utils/index";
 import { color, spacing } from "../utils/constants/index";
 
+// components
 import { Button } from "./Button";
 import { UserIcon } from "./UserIcon";
 import { Tab } from "./tab/index";
@@ -34,15 +37,7 @@ const UserProfile: React.FC<Props> = ({ user }) => {
           <div css={[userName, margin.bottom[2]]}>{user.nickname}</div>
           <div css={userId}>@{user.name}</div>
         </div>
-        <p css={[propfileText, margin.bottom[4]]}>
-          きらりヶ丘中学校３年生。みらいの幼なじみ。
-          <br />
-          スポーツは得意だが勉強は苦手。考えるより先に行動するタイプ。誰かを応援することが好きで、基本、お節介。
-          <br />
-          メルティックスターの赤城あんなとは「ケンカするほど仲がいい」友達。
-          <br />
-          口癖は「えもい」。
-        </p>
+        {!!user.profile && <p css={[propfileText, margin.bottom[4]]}>{user.profile}</p>}
         <div>100 フォロー中</div>
       </div>
       <Tab tabs={tabs} />

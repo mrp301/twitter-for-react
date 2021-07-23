@@ -177,3 +177,9 @@ useEffect(() => {
 
 これらをお手軽に実現できるようにしている。ありたがや。
 参考:https://reffect.co.jp/react/react-useeffect-understanding
+
+### SetState の型定義
+
+```ts
+type SetValue = setValue: React.Dispatch<React.SetStateAction<string>>;
+```
