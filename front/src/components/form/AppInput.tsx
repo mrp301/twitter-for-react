@@ -1,59 +1,42 @@
 /** @jsxImportSource @emotion/react */
-import { css, SerializedStyles } from "@emotion/react";
-import { transform } from "framer-motion";
+import React from "react";
+import { css } from "@emotion/react";
+
+// utils
 import { color } from "../../utils/constants/index";
 import { padding, margin } from "../../utils/index";
 
+// hooks
+import { useInputFocus } from "../../hooks/index";
+
+type InutProps = React.InputHTMLAttributes<HTMLInputElement>;
 type Props = {
-  key: string;
-  name: string;
-  value: string;
-  setValue: React.Dispatch<React.SetStateAction<string>>;
-  placeholder: string;
-  cssProps?: SerializedStyles;
   className?: string;
-  type: string;
 };
 
-const AppInput: React.FC<Props> = (props) => {
-  const input = css(
-    {
-      width: "100%",
-      color: color.main.black,
-    },
-    props.cssProps
-  );
-
-  const handleChange = ({ target }: React.ChangeEvent<HTMLInputElement>): void => {
-    props.setValue(target.value);
-  };
+const AppInput: React.FC<Props & InutProps> = (props) => {
+  const { inputContainer, setFocus } = useInputFocus();
+  const { name, type, value, className, onChange } = props;
 
   return (
     <>
-      <div
-        css={[inputContainer, padding.y[1], padding.right[2], padding.left[2]]}
-        className={props.className}
-      >
+      <div css={[inputContainer, padding.top[1], padding.x[2]]} className={className}>
         <label css={[label]}>{props.placeholder}</label>
         <input
-          id={props.name}
-          name={props.name}
-          type={props.type}
-          value={props.value}
-          css={[input, margin.top[5], margin.bottom[1]]}
-          onChange={(e) => handleChange(e)}
+          id={name}
+          name={name}
+          type={type}
+          value={value}
+          css={[input, margin.top[5]]}
+          className={className}
+          onChange={onChange}
+          onFocus={() => setFocus(true)}
+          onBlur={() => setFocus(false)}
         />
       </div>
     </>
   );
 };
-
-const inputContainer = css({
-  position: "relative",
-  width: "100%",
-  borderRadius: 4,
-  border: `solid 1px ${color.gray.dark}`,
-});
 
 const label = css({
   position: "absolute",
@@ -61,6 +44,11 @@ const label = css({
   left: "9px",
   fontSize: 10,
   color: color.gray.dark,
+});
+
+const input = css({
+  width: "100%",
+  color: color.main.black,
 });
 
 export default AppInput;

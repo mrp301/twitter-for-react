@@ -14,7 +14,7 @@ import { $axios } from "../lib/axios";
 
 // components
 import Head from "../components/Head";
-import AppInput from "../components/form/AppInput";
+import { TextArea } from "../components/form/index";
 import { Button } from "../components/Button";
 import { TweetList } from "../components/TweetList";
 import { AuthContext } from "../components/AuthCotainer";
@@ -27,9 +27,10 @@ type Props = {
 
 const Home: React.FC<Props> = () => {
   const [tweet, setTweet] = useState("");
-  const tweets = useTweets();
   const { state } = useContext(AuthContext);
   const user = state.user;
+
+  const { tweets, setTweets } = useTweets(user.id);
 
   const sendTweet = async (): Promise<void> => {
     const params = {
@@ -37,7 +38,8 @@ const Home: React.FC<Props> = () => {
       content: tweet,
     };
     try {
-      await $axios.post("tweets", params);
+      const res = await $axios.post("tweets", params);
+      setTweets(res.data.data);
     } catch (error) {
       console.error(error);
     }
@@ -52,13 +54,12 @@ const Home: React.FC<Props> = () => {
           <div css={tweetContainer}>
             <div css={[tweetInner, margin.bottom[2]]}>
               <UserIcon userId="emo" size="nomal" />
-              <AppInput
+              <TextArea
                 key="tweet"
                 name="tweet"
                 value={tweet}
-                setValue={setTweet}
+                onChange={(e) => setTweet(e.target.value)}
                 placeholder="いまどうしてる？"
-                type="textarea"
               />
             </div>
             <div css={inputContainer}>

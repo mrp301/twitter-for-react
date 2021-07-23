@@ -18,9 +18,10 @@ type Props = {
 
 const User: React.FC<Props> = () => {
   const { id } = useParams<{ id?: string }>();
-  const tweets = useTweets();
   const { state } = useContext(AuthContext);
   const user = state.user;
+
+  const { tweets } = useTweets(user.id);
 
   return (
     <>

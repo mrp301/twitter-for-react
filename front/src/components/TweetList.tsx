@@ -22,7 +22,8 @@ const TweetList: React.FC<Props> = React.memo(({ tweets }) => {
             <TweetItem
               key={tweet.id}
               id={tweet.id}
-              userId={tweet.userId}
+              name={tweet.name}
+              nickname={tweet.nickname}
               content={tweet.content}
               updatedAt={tweet.updatedAt}
             />

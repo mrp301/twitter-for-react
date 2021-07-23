@@ -21,14 +21,16 @@ const createStyle: CreateStyle = (key, type) => {
   if (type === "y") {
     return {
       [key]: css({
-        padding: `${spacing[key]} 0`,
+        paddingTop: `${spacing[key]}`,
+        paddingBottom: `${spacing[key]}`,
       }),
     };
   }
   if (type === "x") {
     return {
       [key]: css({
-        padding: `0 ${spacing[key]}`,
+        paddingRight: `${spacing[key]}`,
+        paddingLeft: `${spacing[key]}`,
       }),
     };
   }
