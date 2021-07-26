@@ -12,7 +12,6 @@ import AppInput from "../../components/form/AppInput";
 import { Button } from "../../components/Button";
 
 // lib
-import { $axios } from "../../lib/axios";
 import { padding, margin } from "../../utils/index";
 
 const Profile: React.FC = () => {
@@ -35,7 +34,7 @@ const Profile: React.FC = () => {
       isScroll={true}
       handleClose={handleClose}
       headerButton={
-        <Button type="primary" handleClick={handleClick}>
+        <Button color="primary" size="nomal" handleClick={handleClick}>
           保存
         </Button>
       }

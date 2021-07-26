@@ -47,7 +47,7 @@ const contaiiner = [
   padding.x[4],
   css({
     fontSize: 15,
-    borderBottom: `solid 1px ${color.gray.dark}`,
+    borderBottom: `solid 1px ${color.main.white}`,
   }),
 ];
 

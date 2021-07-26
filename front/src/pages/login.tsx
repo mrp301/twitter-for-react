@@ -95,18 +95,23 @@ const Login: React.FC = () => {
             />
           </li>
         </ul>
-        <div css={[margin.bottom[2], textAlign("center")]}>
+        <div css={textAlign("center")}>
           <Button
-            type="primary"
+            color="primary"
             size="full"
             handleClick={handleLogin}
             css={margin.bottom[2]}
           >
-            ログイン
+            ログインする
           </Button>
           <Link to="/signup">
-            <Button type="nomal" size="full">
-              アカウント作成
+            <Button color="secondary" size="full" css={margin.bottom[5]}>
+              アカウント作成する
+            </Button>
+          </Link>
+          <Link to="/home">
+            <Button color="nomal" size="full">
+              ログインせずタイムラインを見る
             </Button>
           </Link>
         </div>

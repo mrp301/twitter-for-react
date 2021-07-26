@@ -6,10 +6,8 @@ import { css } from "@emotion/react";
 import { UserIcon } from "./UserIcon";
 
 // lib
-import { padding, margin } from "../utils/index";
+import { margin } from "../utils/index";
 import { color } from "../utils/constants/index";
-
-import { User } from "../types";
 
 type Props = {
   nickname: string;

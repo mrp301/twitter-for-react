@@ -14,6 +14,7 @@ import Head from "../components/Head";
 // utils
 import { $axios } from "../lib/axios";
 import { color } from "../utils/constants/index";
+import { margin } from "../utils/index";
 import { textAlign, marginBottom } from "../lib/style/index";
 import { reducer, initialState } from "../modules/index";
 
@@ -117,11 +118,18 @@ const Signup: React.FC<Props> = () => {
           ))}
         </ul>
         <div css={[textAlign("center"), marginBottom("small")]}>
-          <Button type="primary" handleClick={handleClick} css={marginBottom("medium")}>
-            アカウント作成
+          <Button color="primary" handleClick={handleClick} css={marginBottom("medium")}>
+            アカウントを作成する
           </Button>
           <Link to="/login">
-            <Button type="nomal">ログイン</Button>
+            <Button color="secondary" css={margin.bottom[5]}>
+              ログインする
+            </Button>
+          </Link>
+          <Link to="/home">
+            <Button color="nomal" size="full">
+              ログインせずタイムラインを見る
+            </Button>
           </Link>
         </div>
         {!!errors.length && (

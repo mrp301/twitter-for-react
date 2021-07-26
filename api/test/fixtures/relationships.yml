@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  follower_id: 167682099
+  followed_id: 204184462
+
+two:
+  follower_id: 167682099
+  followed_id: 336301797
+
+three:
+  follower_id: 336301797
+  followed_id: 167682099

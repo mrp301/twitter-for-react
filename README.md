@@ -2,7 +2,7 @@
 
 ## 勉強会資料
 
-[TypeScriptを使うことで得られる Developer Experience](https://docs.google.com/presentation/d/1c3_KZ6zwdN-PcAZmTCmuJyr9PrxoFhcakvelYBkv2lk/edit?usp=sharing)
+[TypeScript を使うことで得られる Developer Experience](https://docs.google.com/presentation/d/1c3_KZ6zwdN-PcAZmTCmuJyr9PrxoFhcakvelYBkv2lk/edit?usp=sharing)
 
 ## 実行環境
 
@@ -49,10 +49,8 @@ npm install
 
 - ER 図作成
 - user に情報追加
-  - プロフィール
   - アイコン
   - カバー画像
-- ツイート機能
 - プロフィール変更機能
 - ログアウト
 - ページネーション
@@ -61,3 +59,26 @@ npm install
 - テストコード
 - storybook
 - firebase?
+
+# バックエンド
+
+- フォロー機能実装
+- タイムラインフォロー+自分実装
+- ログアウト実装
+
+# フロントエンド
+
+- モーダルのアニメーション
+- フォロー TL など各種機能実装
+- 全体のデザイン
+- storyBook
+- framet 理解度アップ
+- profile 画像、カバー画像機能できれば作りたいが・・・・
+- firabse が必要
+
+# 資料作成
+
+- SPA の仕組み
+- ルーティングの理解
+
+# heroku は最後の最後

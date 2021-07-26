@@ -5,25 +5,13 @@ class TweetsController < ApplicationController
   # get /tweets/:id/mytweet
   def mytweet
     user_id = params[:id]
-    tweets = Tweet
-      .joins(:user)
-      .where(users: { id: user_id })
-      .order(created_at: :desc)
-      .select("tweets.id, content, users.id, name, nickname, tweets.created_at")
-
-      render json: { data: tweets }
+    render json: { data: get_tweets(user_id) }
   end
 
   # GET /tweets
   # GET /tweets.json
   def index
-    tweets = Tweet
-      .joins(:user)
-      .where(users: { id: 859673626 })
-      .order(created_at: :desc)
-      .select("tweets.id, content, users.id, name, nickname, tweets.created_at")
-
-    render json: { data: tweets }
+    render json: { data: get_tweets() }
   end
 
   # GET /tweets/1
@@ -36,10 +24,14 @@ class TweetsController < ApplicationController
   # POST /tweets
   # POST /tweets.json
   def create
-    @tweet = Tweet.new(tweet_params)
+    params = tweet_params
+    name = params[:name]
+    user_id = params[:user_id]
+    content = params[:content]
+    @tweet = Tweet.new({user_id: user_id, content: content })
 
     if @tweet.save
-      tweets = Tweet.joins(:user).order(created_at: :desc)
+      tweets = get_tweets(name)
       render json: { data: tweets }
     else
       render json: @tweet.errors, status: :unprocessable_entity
@@ -70,6 +62,21 @@ class TweetsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def tweet_params
-      params.require(:tweet).permit(:user_id, :string, :content)
+      params.require(:tweet).permit(:user_id, :content)
+    end
+
+    def get_tweets(user_id = nil)
+      if user_id
+        Tweet
+          .joins(:user)
+          .where(users: { name: user_id })
+          .order(created_at: :desc)
+          .select("tweets.id, content, users.id, name, nickname, tweets.updated_at").limit(100)
+      else
+        Tweet
+        .joins(:user)
+        .order(created_at: :desc)
+        .select("tweets.id, content, users.id, name, nickname, tweets.updated_at").limit(100)
+      end
     end
 end

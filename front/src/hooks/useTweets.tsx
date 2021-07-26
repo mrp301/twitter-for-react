@@ -1,17 +1,19 @@
 import { useState, useEffect } from "react";
 import { $axios } from "../lib/axios";
+import { useLocation, useParams } from "react-router-dom";
 
 import { Tweet } from "../components/TweetItem";
 
-const useTweets = <T,>(userId: T) => {
+const useTweets = () => {
   const [tweets, setTweets] = useState<Tweet[]>([]);
+  const { id }: { id: string } = useParams();
 
   // https://takamints.hatenablog.jp/entry/cleanup-an-async-use-effect-hook-of-react-function-componet
   useEffect(() => {
     let unmounted = false;
     (async () => {
       if (!unmounted) {
-        const res = await $axios.get(`tweets/${userId}/mytweet`);
+        const res = await $axios.get(`tweets/${id}/mytweet`);
         setTweets(res.data.data);
       }
     })();
@@ -19,9 +21,30 @@ const useTweets = <T,>(userId: T) => {
     return () => {
       unmounted = true;
     };
-  }, [userId]);
+  }, [id]);
 
   return { tweets, setTweets };
 };
 
-export { useTweets };
+const useAllTweets = () => {
+  const [tweets, setTweets] = useState<Tweet[]>([]);
+  const location = useLocation();
+
+  useEffect(() => {
+    let unmounted = false;
+    (async () => {
+      if (!unmounted) {
+        const res = await $axios.get("tweets");
+        setTweets(res.data.data);
+      }
+    })();
+
+    return () => {
+      unmounted = true;
+    };
+  }, [location]);
+
+  return { tweets, setTweets };
+};
+
+export { useTweets, useAllTweets };

@@ -1,4 +1,13 @@
 Rails.application.routes.draw do
+  resources :users do
+    member do
+      get :current_user
+      get :following_users
+      get :followed_users
+    end
+  end
+  # /users/relationships
+  resource :relationships, only: [:create, :destroy]
   resources :tweets do
     member do
       get :mytweet # /tweets/:id/mytweet

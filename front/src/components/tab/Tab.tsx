@@ -4,18 +4,20 @@ import { css } from "@emotion/react";
 
 import { TabItem } from "./index";
 
-import { color } from "../../utils/constants";
-
 type Props = {
-  tabs: string[];
+  tabs: {
+    text: string;
+    to: string;
+    key: string;
+  }[];
 };
 
 const Tab: React.FC<Props> = ({ tabs }) => {
   return (
     <nav>
       <ul css={container}>
-        {tabs.map((tab) => (
-          <TabItem key={tab} text={tab} />
+        {tabs.map(({ text, to, key }) => (
+          <TabItem key={key} text={text} to={to} />
         ))}
       </ul>
     </nav>
@@ -24,7 +26,6 @@ const Tab: React.FC<Props> = ({ tabs }) => {
 
 const container = css({
   display: "flex",
-  borderBottom: `solid 1px ${color.gray.dark}`,
 });
 
 export { Tab };

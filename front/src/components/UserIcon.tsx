@@ -6,12 +6,12 @@ import { marginRight } from "../lib/style/index";
 type Size = "nomal" | "large";
 type Icon = (size: Size) => SerializedStyles;
 type Props = {
-  userId: string;
+  userId?: string;
   size?: Size;
   className?: string;
 };
 
-const UserIcon: React.FC<Props> = ({ userId, size = "nomal", className }) => {
+const UserIcon: React.FC<Props> = ({ userId = "emo", size = "nomal", className }) => {
   return (
     <div css={[icon(size), marginRight("medium")]} className={className}>
       <img src={`${process.env.PUBLIC_URL}/user/${userId}Icon.png`} alt={userId} />
@@ -31,6 +31,7 @@ const icon: Icon = (size) => {
     height: property[size],
     borderRadius: "50%",
     overflow: "hidden",
+    border: `solid 2px #fff`,
     "& > img": {
       width: "100%",
     },

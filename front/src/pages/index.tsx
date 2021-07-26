@@ -24,17 +24,17 @@ const Index: React.FC = () => {
         </h1>
         <div css={[marginBottom("medium"), textAlign("center")]}>
           <Link to="/signup">
-            <Button type="primary" css={marginBottom("medium")}>
+            <Button color="primary" css={marginBottom("medium")}>
               アカウント作成
             </Button>
           </Link>
           <Link to="/login">
-            <Button type="primary" css={marginBottom("xxlarge")}>
+            <Button color="primary" css={marginBottom("xxlarge")}>
               ログイン
             </Button>
           </Link>
           <Link to="/home">
-            <Button type="nomal">ログインせずタイムラインを見る</Button>
+            <Button>ログインせずタイムラインを見る</Button>
           </Link>
         </div>
       </OnlyCard>
