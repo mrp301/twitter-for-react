@@ -22,7 +22,11 @@ type SetUserAction = {
   user: User;
 };
 
-export type Actions = SetTokenAction | SetUserAction;
+type ResetState = {
+  type: "RESET_STATE";
+};
+
+export type Actions = SetTokenAction | SetUserAction | ResetState;
 
 export type State = {
   auth: Auth;

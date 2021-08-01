@@ -4,3 +4,4 @@ export * from "./following";
 export * from "./scroll";
 export * from "./sendTweet";
 export * from "./session";
+export * from "./signout";

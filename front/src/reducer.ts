@@ -46,6 +46,8 @@ const reducer = (state: State, action: Actions): State => {
       return { ...state, auth: { ...action.auth } };
     case "SET_USER":
       return { ...state, user: { ...action.user } };
+    case "RESET_STATE":
+      return { ...initialState };
     default:
       return state;
   }

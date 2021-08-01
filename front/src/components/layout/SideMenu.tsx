@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import React, { useContext, useState, useRef } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { useModal } from "../../hooks/index";
 import { AuthContext } from "../AuthCotainer";
 import { css } from "@emotion/react";
@@ -20,20 +20,26 @@ import {
 
 import { color } from "../../utils/constants/index";
 import { padding, margin, hover } from "../../utils/index";
+import { signout } from "../../lib/index";
 
 const SideMenu: React.FC = () => {
   const {
     state: { user, auth },
+    dispatch,
   } = useContext(AuthContext);
-  const name = user.name;
   const isLogin = auth.uid !== "";
-
   const [isballoonMenuVisble, setIsballoonMenuVisble] = useState(false);
-
   const pink = color.main.white;
   const to = useModal("/tweet");
-
   const ref = useRef(null);
+
+  const handleSingOut = () => {
+    signout().then(() => {
+      dispatch({
+        type: "RESET_STATE",
+      });
+    });
+  };
 
   return (
     <aside css={container}>
@@ -111,7 +117,10 @@ const SideMenu: React.FC = () => {
                 <li css={[padding.x[3], padding.y[4], hover(color.main.pink)]}>
                   <Link to={`/user/${user.name}`}>マイページへ</Link>
                 </li>
-                <li css={[padding.x[3], padding.y[4], hover(color.main.pink)]}>
+                <li
+                  css={[padding.x[3], padding.y[4], hover(color.main.pink)]}
+                  onClick={handleSingOut}
+                >
                   @{user.name}からログアウト
                 </li>
                 <li

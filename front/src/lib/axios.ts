@@ -1,24 +1,6 @@
 import axios, { AxiosInstance, AxiosResponse } from "axios";
 import camelCaseKeys from "camelcase-keys";
-
-// const $axios: AxiosInstance = axios.create({
-//   baseURL: `http://localhost:3000/`,
-//   headers: { "Content-Type": "application/json" },
-//   responseType: "json",
-// });
-
-// $axios.interceptors.response.use(
-//   (config: AxiosResponse) => {
-//     config.headers["access-token"] = "Uo9Sl__hY41M5doI-rRI-A";
-//     config.headers.uid = "rZ9lz6hAEYWU3kfrqV5gUg";
-//     config.headers.client = "momo@gmail.com";
-//     return config;
-//   },
-//   (response: AxiosResponse): AxiosResponse => {
-//     const data = camelCaseKeys(response.data, { deep: true });
-//     return { ...response.data, data };
-//   }
-// );
+import { getSessionAuth } from "../lib/index";
 
 const $axios: AxiosInstance = axios.create({
   baseURL: `http://localhost:3000/`,
@@ -26,10 +8,21 @@ const $axios: AxiosInstance = axios.create({
   responseType: "json",
 });
 
+$axios.interceptors.request.use(
+  (config) => {
+    const auth = getSessionAuth();
+    if (!!auth.uid) {
+      config.headers.common["access-token"] = auth.token;
+      config.headers.common["uid"] = auth.uid;
+      config.headers.common["client"] = auth.client;
+    }
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
+
 $axios.interceptors.response.use(
-  (response: AxiosResponse): AxiosResponse => {
-    return camelCaseKeys(response, { deep: true });
-  }
+  (response: AxiosResponse): AxiosResponse => camelCaseKeys(response, { deep: true })
 );
 
 export { $axios };
