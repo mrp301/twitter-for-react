@@ -5,13 +5,15 @@ const color = {
   base: "#f6b8cd",
   main: {
     pink: "#ea5181",
-    blue: "#1da1f2",
+    pinkLight: "#f27ea9",
     black: "#14171a",
+    white: "#fff",
+    blue: "#3061f2",
   },
   gray: {
-    dark: "#6d6d6d",
-    light: "#aabbc2",
-    extraLight: "e1e8ed",
+    dark: "#402230",
+    light: "#969596",
+    extraLight: "#e1e8ed",
     extraExtraLight: "#f5f8fa",
   },
 };

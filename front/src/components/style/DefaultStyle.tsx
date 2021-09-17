@@ -21,7 +21,6 @@ const defaultStyle = css`
   main {
     margin: 32px auto;
     padding: 0 32px;
-    max-width: 1000px;
   }
 
   button {

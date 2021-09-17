@@ -1,11 +1,12 @@
 /** @jsxImportSource @emotion/react */
-import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import React, { useContext, useState, useRef } from "react";
+import { Link, useHistory } from "react-router-dom";
 import { useModal } from "../../hooks/index";
 import { AuthContext } from "../AuthCotainer";
 import { css } from "@emotion/react";
 
 import { Button } from "../Button";
+import { UserCard } from "../UserCard";
 
 import {
   Bookmarks,
@@ -18,84 +19,146 @@ import {
 } from "../icon/index";
 
 import { color } from "../../utils/constants/index";
-import { padding, margin } from "../../utils/index";
+import { padding, margin, hover } from "../../utils/index";
+import { signout } from "../../lib/index";
 
 const SideMenu: React.FC = () => {
   const {
-    state: { user },
+    state: { user, auth },
+    dispatch,
   } = useContext(AuthContext);
-  const name = user.name;
-  const pink = color.main.pink;
+  const isLogin = auth.uid !== "";
+  const [isballoonMenuVisble, setIsballoonMenuVisble] = useState(false);
+  const pink = color.main.white;
   const to = useModal("/tweet");
+  const ref = useRef(null);
+
+  const handleSingOut = () => {
+    signout().then(() => {
+      dispatch({
+        type: "RESET_STATE",
+      });
+    });
+  };
 
   return (
     <aside css={container}>
       <ul css={navList}>
-        <li>
+        <li css={hover()}>
           <Link to="/home">
             <Home color={pink} size={24} />
             <div css={margin.left[2]}>ホーム</div>
           </Link>
         </li>
-        <li>
-          <Link to="/notifications">
-            <Notifications color={pink} size={24} />
-            <div css={margin.left[2]}>通知</div>
-          </Link>
-        </li>
-        <li>
-          <Link to="/messages">
-            <Messages color={pink} size={24} />
-            <div css={margin.left[2]}>メッセージ</div>
-          </Link>
-        </li>
-        <li>
-          <Link to="/bookmarks">
-            <Bookmarks color={pink} size={24} />
-            <div css={margin.left[2]}>ブックマーク</div>
-          </Link>
-        </li>
-        <li>
-          <Link to="/search">
-            <Search color={pink} size={24} />
-            <div css={margin.left[2]}>検索</div>
-          </Link>
-        </li>
-        <li>
-          <Link to={`/user/${name}`}>
+        <li css={hover()}>
+          <Link to={`/allusers`}>
             <Profile color={pink} size={24} />
-            <div css={margin.left[2]}>プロフィール</div>
+            <div css={margin.left[2]}>ユーザー一覧</div>
           </Link>
         </li>
-        <li>
-          <Link to="/setting">
-            <Setting color={pink} size={24} />
-            <div css={margin.left[2]}>設定</div>
-          </Link>
-        </li>
-        <li css={margin.top[4]}>
-          <Link to={to}>
-            <Button type="primary" size="full">
-              ツイートする
-            </Button>
-          </Link>
-        </li>
+        {isLogin && (
+          <>
+            <li css={hover()}>
+              <Link to="/home">
+                <Notifications color={pink} size={24} />
+                <div css={margin.left[2]}>通知</div>
+              </Link>
+            </li>
+            <li css={hover()}>
+              <Link to="/home">
+                <Messages color={pink} size={24} />
+                <div css={margin.left[2]}>メッセージ</div>
+              </Link>
+            </li>
+            <li css={hover()}>
+              <Link to="/home">
+                <Bookmarks color={pink} size={24} />
+                <div css={margin.left[2]}>ブックマーク</div>
+              </Link>
+            </li>
+            <li css={hover()}>
+              <Link to="/home">
+                <Search color={pink} size={24} />
+                <div css={margin.left[2]}>検索</div>
+              </Link>
+            </li>
+            <li css={hover()}>
+              <Link to="/home">
+                <Setting color={pink} size={24} />
+                <div css={margin.left[2]}>設定</div>
+              </Link>
+            </li>
+            <li css={margin.top[4]}>
+              <Link to={to}>
+                <Button size="full" color="secondary">
+                  ツイートする
+                </Button>
+              </Link>
+            </li>
+          </>
+        )}
       </ul>
+      {isLogin ? (
+        <div css={balloonMenuContainer}>
+          <UserCard
+            nickname={user.nickname}
+            name={user.name}
+            handleClick={() => setIsballoonMenuVisble(true)}
+            css={[padding.all[2], hover()]}
+          />
+          {isballoonMenuVisble && (
+            <div ref={ref} css={[balloonMenu, padding.y[2]]}>
+              <UserCard
+                nickname={user.nickname}
+                name={user.name}
+                css={[padding.all[3]]}
+              />
+              <ul css={balloonMenuList}>
+                <li css={[padding.x[3], padding.y[4], hover(color.main.pink)]}>
+                  <Link to={`/user/${user.name}`}>マイページへ</Link>
+                </li>
+                <li
+                  css={[padding.x[3], padding.y[4], hover(color.main.pink)]}
+                  onClick={handleSingOut}
+                >
+                  @{user.name}からログアウト
+                </li>
+                <li
+                  css={[padding.all[3], hover(color.main.pink)]}
+                  onClick={() => setIsballoonMenuVisble(false)}
+                >
+                  <div css={balloonMenuClose}>閉じる</div>
+                </li>
+              </ul>
+            </div>
+          )}
+        </div>
+      ) : (
+        <div css={padding.x[4]}>
+          <Link to="/login">
+            <Button color="secondary">ログインする</Button>
+          </Link>
+        </div>
+      )}
     </aside>
   );
 };
 
 const container = [
-  padding.x[4],
-  padding.bottom[2],
+  padding.top[8],
+  padding.bottom[3],
   css({
+    display: "flex",
     flex: "0 0 auto",
+    flexDirection: "column",
+    justifyContent: "space-between",
     position: "sticky",
     top: "0",
     left: "0",
-    minHeight: "100vh",
-    minWidth: "100px",
-    borderRight: `solid 1px ${color.gray.dark}`,
+    height: "100vh",
+    minWidth: "150px",
+    backgroundColor: color.main.pink,
+    boxShadow: "rgb(0 0 0 / 10%) 0 0 15px, rgb(0 0 0 / 5%) 0 0 3px 1px",
   }),
 ];
 
@@ -103,16 +166,55 @@ const navList = css({
   textAlign: "center",
   li: {
     a: [
-      padding.all[4],
+      padding.y[4],
+      padding.x[6],
       {
         display: "flex",
         alignItems: "center",
-        color: color.main.pink,
+        color: color.main.white,
         fontWeight: "bold",
         svg: { flex: "0 0 auto" },
       },
     ],
   },
+});
+
+const balloonMenuContainer = css({
+  position: "relative",
+  zIndex: 100,
+});
+
+const balloonMenu = css({
+  position: "absolute",
+  top: "-230px",
+  left: "8px",
+  width: 320,
+  borderRadius: 12,
+  backgroundColor: "#fff",
+  boxShadow: "rgb(0 0 0 / 10%) 0 0 15px, rgb(0 0 0 / 5%) 0 0 3px 1px",
+});
+
+const balloonMenuList = css({
+  borderTop: `solid 1px ${color.gray.light}`,
+  li: {
+    fontSize: "12px",
+    "&:hover": {
+      cursor: "pointer",
+    },
+    ":not(:last-of-type)": {
+      borderBottom: `solid 1px ${color.gray.light}`,
+    },
+    a: {
+      color: color.main.black,
+      display: "block",
+    },
+  },
+});
+
+const balloonMenuClose = css({
+  textAlign: "center",
+  fontSize: "12px",
+  color: color.gray.dark,
 });
 
 export { SideMenu };

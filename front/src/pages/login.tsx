@@ -7,9 +7,11 @@ import Head from "../components/Head";
 // style
 import { css } from "@emotion/react";
 import { textAlign, marginBottom } from "../lib/style/index";
+import { padding, margin } from "../utils/index";
 
 // modules
 import { $axios } from "../lib/axios";
+import { User } from "../reducer";
 
 // components
 import AppInput from "../components/form/AppInput";
@@ -36,24 +38,6 @@ type ResponseLoginHeaders = {
   uid: string;
 };
 
-type ResponseLoginBody = {
-  id: number;
-  email: string;
-  provider: string;
-  uid: string;
-  allowPasswordChange: boolean;
-  name: string;
-  nickname: string;
-  image?: string;
-};
-
-const title = css({
-  textAlign: "center",
-  fontSize: "1.8rem",
-  fontWeight: "bold",
-  marginBottom: 25,
-});
-
 const Login: React.FC = () => {
   const history = useHistory();
 
@@ -67,7 +51,7 @@ const Login: React.FC = () => {
     const postParams: PostParams = { email, password };
     try {
       const response = await $axios.post("api/v1/auth/sign_in", postParams);
-      const responseBody: ResponseLoginBody = response.data.data;
+      const responseBody: User = response.data.data;
       const responseHeader: ResponseLoginHeaders = response.headers;
       const { uid, client, accessToken: token } = responseHeader;
       const auth: Auth = { uid, client, token };
@@ -93,9 +77,9 @@ const Login: React.FC = () => {
               key="email"
               name="email"
               value={email}
-              setValue={setEmail}
+              onChange={(e) => setEmail(e.target.value)}
               placeholder="email"
-              css={marginBottom("small")}
+              css={margin.bottom[2]}
               type="text"
             />
           </li>
@@ -104,24 +88,30 @@ const Login: React.FC = () => {
               key="password"
               name="password"
               value={password}
-              setValue={setPassword}
+              onChange={(e) => setPassword(e.target.value)}
               placeholder="password"
               type="password"
+              css={margin.bottom[4]}
             />
           </li>
         </ul>
-        <div css={[marginBottom("medium"), textAlign("center")]}>
+        <div css={textAlign("center")}>
           <Button
-            type="primary"
+            color="primary"
             size="full"
             handleClick={handleLogin}
-            css={marginBottom("medium")}
+            css={margin.bottom[2]}
           >
-            ログイン
+            ログインする
           </Button>
           <Link to="/signup">
-            <Button type="nomal" size="full">
-              アカウント作成
+            <Button color="secondary" size="full" css={margin.bottom[5]}>
+              アカウント作成する
+            </Button>
+          </Link>
+          <Link to="/home">
+            <Button color="nomal" size="full">
+              ログインせずタイムラインを見る
             </Button>
           </Link>
         </div>
@@ -136,5 +126,12 @@ const Login: React.FC = () => {
     </>
   );
 };
+
+const title = css({
+  textAlign: "center",
+  fontSize: "1.8rem",
+  fontWeight: "bold",
+  marginBottom: 25,
+});
 
 export { Login };

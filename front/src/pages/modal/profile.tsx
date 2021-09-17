@@ -4,11 +4,15 @@ import { AuthContext } from "../../components/AuthCotainer";
 import { useHistory } from "react-router-dom";
 import * as H from "history";
 import { css } from "@emotion/react";
-import { padding, margin } from "../../utils/index";
 
+// compnents
+import { TextArea } from "../../components/form/index";
 import { Modal } from "../../components/Modal";
 import AppInput from "../../components/form/AppInput";
 import { Button } from "../../components/Button";
+
+// lib
+import { padding, margin } from "../../utils/index";
 
 const Profile: React.FC = () => {
   const histroy: H.History = useHistory();
@@ -20,32 +24,37 @@ const Profile: React.FC = () => {
   const user = state.user;
 
   const [name, setName] = useState<string>(user.nickname);
-  const [profile, setProfile] = useState<string>("");
+  const [profile, setProfile] = useState<string>(user.profile ? user.profile : "");
+
+  const handleClick = () => {};
 
   return (
     <Modal
       headerText="プロフィールを編集"
       isScroll={true}
       handleClose={handleClose}
-      headerButton={<Button type="primary">保存</Button>}
+      headerButton={
+        <Button color="primary" size="nomal" handleClick={handleClick}>
+          保存
+        </Button>
+      }
     >
       <div css={padding.all[4]}>
         <AppInput
           key="name"
           name="name"
           value={name}
-          setValue={setName}
+          onChange={(e) => setName(e.target.value)}
           placeholder="名前"
           type="text"
           css={margin.bottom[4]}
         />
-        <AppInput
+        <TextArea
           key="profile"
           name="profile"
           value={profile}
-          setValue={setProfile}
-          placeholder="自己紹介"
-          type="text"
+          onChange={(e) => setProfile(e.target.value)}
+          placeholder={"自己紹介"}
           css={margin.bottom[4]}
         />
       </div>

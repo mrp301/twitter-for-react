@@ -1,34 +1,39 @@
 export type Auth = {
-  uid: string,
-  client: string,
-  token: string,
-}
+  uid: string;
+  client: string;
+  token: string;
+};
 
 export type User = {
-  id: number,
-  name: string,
-  nickname: string,
-  email: string,
-}
+  id: number;
+  name: string;
+  nickname: string;
+  email?: string;
+  profile?: string;
+};
 
 type SetTokenAction = {
-  type: 'SET_TOKEN',
-  auth: Auth,
-}
+  type: "SET_TOKEN";
+  auth: Auth;
+};
 
 type SetUserAction = {
-  type: 'SET_USER',
-  user: User,
-}
+  type: "SET_USER";
+  user: User;
+};
 
-export type Actions = SetTokenAction | SetUserAction;
+type ResetState = {
+  type: "RESET_STATE";
+};
+
+export type Actions = SetTokenAction | SetUserAction | ResetState;
 
 export type State = {
-  auth: Auth,
-  user: User,
-}
+  auth: Auth;
+  user: User;
+};
 
 export type StoreProvider = {
-  state: State,
-  dispatch: React.Dispatch<Actions>,
-}
+  state: State;
+  dispatch: React.Dispatch<Actions>;
+};

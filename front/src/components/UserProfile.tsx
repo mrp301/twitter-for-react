@@ -1,11 +1,17 @@
 /** @jsxImportSource @emotion/react */
-import React from "react";
+import React, { useContext } from "react";
 import { useModal } from "../hooks/index";
 import { Link } from "react-router-dom";
 import { css } from "@emotion/react";
+
+// utils
 import { padding, margin } from "../utils/index";
 import { color, spacing } from "../utils/constants/index";
+import { following } from "../lib/index";
+import { useFolloingUsers } from "../hooks/index";
 
+// components
+import { AuthContext } from "./AuthCotainer";
 import { Button } from "./Button";
 import { UserIcon } from "./UserIcon";
 import { Tab } from "./tab/index";
@@ -17,33 +23,67 @@ type Props = {
 };
 
 const UserProfile: React.FC<Props> = ({ user }) => {
-  const name = "emo";
-  const tabs = ["ツイート", "ツイートと返信", "メディア", "いいね"];
+  const { followUsers } = useFolloingUsers();
+  const followCount = followUsers.length;
+
+  const { state } = useContext(AuthContext);
+  const tabs = [
+    {
+      text: "ツイート",
+      to: `/user/${state.user.name}/`,
+      key: "tweet",
+    },
+    {
+      text: "フォロー",
+      to: `/user/${state.user.name}/follow`,
+      key: "follow",
+    },
+    {
+      text: "フォロワー",
+      to: `/user/${state.user.name}/follow`,
+      key: "follower",
+    },
+    {
+      text: "いいね",
+      to: `/user/${state.user.name}/`,
+      key: "fav",
+    },
+  ];
   const to = useModal("/profile");
+
+  const handleClick = (followUserId: number) => {
+    const userId = state.user.id;
+    following(userId, followUserId);
+  };
 
   return (
     <div css={[container]}>
       <div css={padding.all[4]}>
-        <UserIcon userId={name} size="large" css={icon} />
-        <Link to={to}>
-          <Button type="nomal" css={changeButton}>
-            変更
+        <UserIcon size="large" css={icon} />
+        {state.user.id === user.id ? (
+          <Link to={to}>
+            <Button size="nomal" color="secondary" css={changeButton}>
+              変更
+            </Button>
+          </Link>
+        ) : (
+          <Button
+            size="nomal"
+            color="primary"
+            css={changeButton}
+            handleClick={() => handleClick(user.id)}
+          >
+            フォローする
           </Button>
-        </Link>
+        )}
         <div css={margin.bottom[4]}>
           <div css={[userName, margin.bottom[2]]}>{user.nickname}</div>
           <div css={userId}>@{user.name}</div>
         </div>
-        <p css={[propfileText, margin.bottom[4]]}>
-          きらりヶ丘中学校３年生。みらいの幼なじみ。
-          <br />
-          スポーツは得意だが勉強は苦手。考えるより先に行動するタイプ。誰かを応援することが好きで、基本、お節介。
-          <br />
-          メルティックスターの赤城あんなとは「ケンカするほど仲がいい」友達。
-          <br />
-          口癖は「えもい」。
-        </p>
-        <div>100 フォロー中</div>
+        {!!user.profile && <p css={[propfileText, margin.bottom[4]]}>{user.profile}</p>}
+        <div>
+          <span css={followNumber}>{followCount}</span> フォロー中
+        </div>
       </div>
       <Tab tabs={tabs} />
     </div>
@@ -79,6 +119,10 @@ const userId = css({
 const propfileText = css({
   fontSize: 15,
   lineHeight: 1.2,
+});
+
+const followNumber = css({
+  fontWeight: "bold",
 });
 
 export { UserProfile };

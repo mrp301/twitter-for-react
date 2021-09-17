@@ -1,10 +1,19 @@
+import React, { useEffect } from "react";
 import { Helmet } from "react-helmet";
+import { scrollTop } from "../lib/index";
+import { useLocation } from "react-router-dom";
 
 type Props = {
   title: string;
 };
 
 const Head: React.FC<Props> = ({ title }) => {
+  const location = useLocation();
+
+  useEffect(() => {
+    scrollTop();
+  }, [location]);
+
   return (
     <Helmet>
       <title>{title} / twitter-for-react</title>

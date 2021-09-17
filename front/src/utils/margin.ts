@@ -21,14 +21,16 @@ const createStyle: CreateStyle = (key, type) => {
   if (type === "y") {
     return {
       [key]: css({
-        margin: `${spacing[key]} 0`,
+        marginTop: `${spacing[key]}`,
+        marginBottom: `${spacing[key]}`,
       }),
     };
   }
   if (type === "x") {
     return {
       [key]: css({
-        margin: `0 ${spacing[key]}`,
+        marginRight: `${spacing[key]}`,
+        marginLeft: `${spacing[key]}`,
       }),
     };
   }

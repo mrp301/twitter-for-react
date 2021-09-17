@@ -8,7 +8,7 @@ import { zindex, color } from "../utils/constants/index";
 type Props = {
   headerText?: string;
   headerButton?: React.ReactNode;
-  handleClose?: Function;
+  handleClose: Function;
   isScroll?: boolean;
 };
 
@@ -42,7 +42,7 @@ const Modal: React.FC<Props> = ({
           <div css={modalContainer}>
             <div css={modal}>
               {!!headerText && !!handleClose && (
-                <div css={[modalHeader, padding.all[4]]}>
+                <div css={[modalHeader, padding.y[2], padding.x[4]]}>
                   <div css={[close, margin.right[6]]} onClick={() => handleClose()}>
                     閉じる
                   </div>

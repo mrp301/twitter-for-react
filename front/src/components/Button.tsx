@@ -1,54 +1,87 @@
 /** @jsxImportSource @emotion/react */
 import React from "react";
 import { css } from "@emotion/react";
+import hexToRgba from "hex-to-rgba";
+
 import { padding } from "../utils/index";
 import { color } from "../utils/constants/index";
 
-type Type = "nomal" | "primary";
+type Size = "full" | "nomal";
+type Color = "primary" | "secondary" | "nomal";
 
 type Props = {
-  type: Type;
-  size?: "full" | "nomal" | "medium" | "large";
+  type?: "button" | "reset" | "submit";
+  size?: Size;
+  color?: Color;
   handleClick?: Function;
   className?: string;
 };
 
-const Button: React.FC<Props> = ({ children, type, size = "nomal", handleClick }) => {
+const Button: React.FC<Props> = ({
+  children,
+  type = "button",
+  size = "full",
+  color = "nomal",
+  handleClick,
+  className,
+}) => {
   return !!handleClick ? (
-    <button css={button(type, size)} onClick={() => handleClick()}>
+    <button
+      type={type}
+      css={style(size, color)}
+      className={className}
+      onClick={() => handleClick()}
+    >
       {children}
     </button>
   ) : (
-    <button css={button(type, size)}>{children}</button>
+    <button css={style(size, color)} className={className}>
+      {children}
+    </button>
   );
 };
 
-const buttonType = {
-  nomal: {
-    color: color.main.pink,
-    border: `solid 2px ${color.main.pink}`,
-  },
-  primary: {
-    color: "#fff",
-    border: `solid 1px ${color.main.pink}`,
+const theme = {
+  primary: css({
+    color: color.main.white,
     backgroundColor: color.main.pink,
+    "&:hover": {
+      backgroundColor: hexToRgba(color.main.pink, 0.8),
+    },
+  }),
+  secondary: css({
+    color: color.main.white,
+    backgroundColor: color.main.blue,
+    "&:hover": {
+      backgroundColor: hexToRgba(color.main.blue, 0.8),
+    },
+  }),
+  nomal: css({
+    border: `solid 2px ${color.main.pink}`,
+    color: color.main.pink,
+  }),
+};
+
+const scale = {
+  nomal: {
+    paddingRight: 18,
+    paddingLeft: 18,
+  },
+  full: {
+    display: "block",
+    width: "100%",
   },
 };
 
-const button = (type: Type, size = "nomal") => [
+const style = (size: Size, color: Color) => [
   padding.all[3],
+  scale[size],
+  theme[color],
   css({
-    display: size === "full" ? "block" : "inlineBlock",
-    width: size === "full" ? "100%" : "auto",
     fontSize: "1.3rem",
     fontWeight: "bold",
     textAlign: "center",
     borderRadius: 48,
-    ...buttonType[type],
-    "&:hover": {
-      cursor: "pointer",
-      opacity: 0.8,
-    },
   }),
 ];
 
